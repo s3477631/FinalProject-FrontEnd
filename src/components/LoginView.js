@@ -1,8 +1,8 @@
 import React from "react"
 
 export default function LoginView() {
-    return(
-        < >
+    return (
+        <>
         <h1>Break Scheduler</h1>
         <form>
             <div>
@@ -15,6 +15,6 @@ export default function LoginView() {
             </div>
             <button>Submit</button>
         </form>
-        < />
+        </>
     )
 }
