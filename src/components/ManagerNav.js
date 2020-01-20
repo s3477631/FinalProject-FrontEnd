@@ -6,6 +6,7 @@ export default function ManagerNav() {
             <button>UPLOAD</button>
             <button>STATS</button>
             <button>VIEW</button>
+            <h1>Break Scheduler</h1>
         </>
     )
 }
