@@ -1,30 +1,32 @@
 import React, { useState } from "react"
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import FloaterView from "./FloaterView"
 import LoginView from "./LoginView"
 import ManagerUploadView from "./ManagerUploadView"
 import ManagerStatsView from "./ManagerStatsView"
 import ManagerViewView from "./ManagerViewView"
+let user = {
+    name: "manager"
+}
 
 export default function App() {
-    const [location, navigateTo] = useState(null)
     return (
         <BrowserRouter>
             <Switch>
-                <Route exact path="/">
+                <Route path="/">
                     <LoginView />
                 </Route>
                 <Route path="/floater">
                     <FloaterView />
                 </Route>
                 <Route path="/upload">
-                    <ManagerUploadView navigateTo={navigateTo}/>
+                    <ManagerUploadView />
                 </Route>
                 <Route path="/view">
-                    <ManagerViewView navigateTo={navigateTo}/>
+                    <ManagerViewView />
                 </Route>
                 <Route path="/stats">
-                    <ManagerStatsView navigateTo={navigateTo}/>
+                    <ManagerStatsView />
                 </Route>
             </Switch>
         </BrowserRouter>

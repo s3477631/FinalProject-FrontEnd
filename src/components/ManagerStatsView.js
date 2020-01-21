@@ -1,10 +1,10 @@
 import React from "react"
 import ManagerNav from "./ManagerNav"
 
-export default function ManagerStatsView() {
+export default function ManagerStatsView(props) {
     return (
         <>
-            <ManagerNav />
+            <ManagerNav navigateTo={props.navigateTo}/>
             <table>
                 <thead>
                     <th>Statistic</th>
