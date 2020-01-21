@@ -8,12 +8,13 @@ import ManagerViewView from "./ManagerViewView"
 import stateReducer from "./stateReducer"
 import { StateContext } from "./store"
 import PrivateRoute from "./PrivateRoute"
+import ManagerRoute from "./ManagerRoute"
 
 export default function App() {
 
     const initialState = {
         user: null,
-        token: "YEET",
+        token: null,
     }
 
     const [store, dispatch] = useReducer(stateReducer, initialState)
@@ -30,18 +31,18 @@ export default function App() {
                             : <LoginView />
                         }
                     </Route>
-                    <Route path="/floater">
+                    <PrivateRoute path="/floater">
                         <FloaterView />
-                    </Route>
-                    <PrivateRoute path="/upload">
-                        <ManagerUploadView />
                     </PrivateRoute>
-                    <Route path="/view">
+                    <ManagerRoute path="/upload">
+                        <ManagerUploadView />
+                    </ManagerRoute>
+                    <ManagerRoute path="/view">
                         <ManagerViewView />
-                    </Route>
-                    <Route path="/stats">
+                    </ManagerRoute>
+                    <ManagerRoute path="/stats">
                         <ManagerStatsView />
-                    </Route>
+                    </ManagerRoute>
                 </Switch>
             </BrowserRouter>
         </StateContext.Provider>
