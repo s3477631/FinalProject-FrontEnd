@@ -1,4 +1,4 @@
-import React, { useReducer } from "react"
+import React, { useReducer, useEffect } from "react"
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import FloaterView from "./FloaterView"
 import LoginView from "./LoginView"
@@ -13,21 +13,41 @@ import ManagerRoute from "./ManagerRoute"
 export default function App() {
 
     const initialState = {
-        user: null,
-        token: null,
+        user: JSON.parse(localStorage.getItem("user")) || null,
+        token: localStorage.getItem("token") || null,
     }
 
     const [store, dispatch] = useReducer(stateReducer, initialState)
-    const { user, token } = store
+    const { user } = store
+    
+    // Use effect hook to initialise component on mount
+	useEffect(()=> {
 
+        // get an existing user from localStorage
+        dispatch({
+            type: "setUser",
+            data: JSON.parse(localStorage.getItem("user"))
+		})
+        
+        // same with token
+        dispatch({
+            type: "setToken",
+            data: localStorage.getItem("token")
+        })
+
+        // return a function that specifies any actions on component unmount
+        return () => {}
+        
+    }, [])
+    
     return (
         <StateContext.Provider value={{store, dispatch}}>
             <BrowserRouter>
                 <Switch>
                     <Route exact path="/">
                         { 
-                            user && user.name == "manager" ? <Redirect to="/upload" />
-                            : user && user.name == "floater" ? <Redirect to="/floater" />
+                            user && user.name === "manager" ? <Redirect to="/upload" />
+                            : user && user.name === "floater" ? <Redirect to="/floater" />
                             : <LoginView />
                         }
                     </Route>

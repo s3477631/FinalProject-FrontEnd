@@ -1,12 +1,7 @@
-import React, { useReducer } from "react"
+import React from "react"
 import { useGlobalState } from "./store"
 
 export default function LoginView() {
-    
-    const initialState = {
-        username: null,
-        password: null
-    }
 
     const { dispatch } = useGlobalState()
 
@@ -14,23 +9,22 @@ export default function LoginView() {
         event.preventDefault()
         const elements = event.target.elements
         const username = elements[0].value
-        const password = elements[1]
+        // const password = elements[1] //should check for match
 
-        debugger
         // retrieve token
-        const token = "ASDF"
-        onLogin(token, username)
-    }
-
-    const onLogin = (token, username) => {
+        const token = "random"
+        const user = {name: username}
+        // update state
         dispatch({
             type: "setToken",
             data: token
         })
         dispatch({
             type: "setUser",
-            data: {name: username},
+            data: user,
         })
+        localStorage.setItem("user", JSON.stringify(user))
+        localStorage.setItem("token", token)
     }
 
     return (
@@ -38,11 +32,11 @@ export default function LoginView() {
         <h1>Break Scheduler</h1>
         <form onSubmit={(event) => onSubmit(event)}>
             <div>
-                <label for="username">Username:</label>
+                <label>Username:</label>
                 <input name="username" />
             </div>
             <div>
-                <label for="password">Password:</label>
+                <label>Password:</label>
                 <input name="password" type="password" />
             </div>
             <button>Submit</button>

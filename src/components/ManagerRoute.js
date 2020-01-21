@@ -7,8 +7,8 @@ import { useGlobalState } from "./store"
 export default function ManagerRoute(props) {
     const { store } = useGlobalState()
     const { user } = store
-
-    if (!user || user.name != "manager") {
+    console.log(user, user.name)
+    if (!user || user.name !== "manager") {
         return <Redirect to="/" />
     }
 
