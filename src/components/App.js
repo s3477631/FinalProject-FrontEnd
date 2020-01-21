@@ -9,17 +9,25 @@ import ManagerViewView from "./ManagerViewView"
 export default function App() {
     const [location, navigateTo] = useState(null)
     return (
-        <>
-            <BrowserRouter>
-                <div>
-                    <Route exact path="/" component={LoginView} />
-                    <Route exact path="/view" component={ManagerViewView} />
-                    <Route exact path="/upload" component={ManagerUploadView} />
-                    <Route exact path="/stats" component={ManagerStatsView} />
-                    <Route exact path="/floater" component={FloaterView} />
-                </div>
-            </BrowserRouter>
-        </>
+        <BrowserRouter>
+            <Switch>
+                <Route exact path="/">
+                    <LoginView />
+                </Route>
+                <Route path="/floater">
+                    <FloaterView />
+                </Route>
+                <Route path="/upload">
+                    <ManagerUploadView navigateTo={navigateTo}/>
+                </Route>
+                <Route path="/view">
+                    <ManagerViewView navigateTo={navigateTo}/>
+                </Route>
+                <Route path="/stats">
+                    <ManagerStatsView navigateTo={navigateTo}/>
+                </Route>
+            </Switch>
+        </BrowserRouter>
     )
 }
 
