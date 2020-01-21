@@ -8,42 +8,18 @@ export default function LoginView() {
         password: null
     }
 
-    const { loginDetails, loginDispatch } = useReducer((state, action) => {
-        switch (action.type) {
-            case "setUsername": {
-                return {
-                    ...state,
-                    username: action.data
-                }
-            }
-            case "setPassword": {
-                return {
-                    ...state, 
-                    password: action.data
-                }
-            }
-        }
-    }, initialState)
-
     const { dispatch } = useGlobalState()
 
     const onSubmit = (event) => {
         event.preventDefault()
         const elements = event.target.elements
-        const username = elements[0]
+        const username = elements[0].value
         const password = elements[1]
 
         debugger
         // retrieve token
         const token = "ASDF"
         onLogin(token, username)
-    }
-
-    const onChange = (event, action) => {
-        loginDispatch({
-            type: action,
-            data: event.value
-        })
     }
 
     const onLogin = (token, username) => {
@@ -63,11 +39,11 @@ export default function LoginView() {
         <form onSubmit={(event) => onSubmit(event)}>
             <div>
                 <label for="username">Username:</label>
-                <input name="username" onChange={event => onChange(event, "setUsername")} />
+                <input name="username" />
             </div>
             <div>
                 <label for="password">Password:</label>
-                <input name="password" type="password" onChange={event => onChange(event, "setPassword")}/>
+                <input name="password" type="password" />
             </div>
             <button>Submit</button>
         </form>
