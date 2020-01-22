@@ -1,25 +1,39 @@
-import React from "react"
+import React, { useState } from "react"
 import Break from "../components/Break"
 import Logout from "../components/Logout"
 import breakSchedules from "../modules/seeds"
 
 export default function FloaterView() {
+
+    const [ schedule, setSchedule ] = useState(null)
+
+    const onDateSelect = () => {
+
+        // retrive date in date picker 
+        let date = document.getElementById('floater-date').value
+        // convert from YYYY-MM-DD to DD/MM/YYYY
+            .split("-")
+            .reverse()
+            .join("/")
+        
+        setSchedule(breakSchedules[date])
+    }
+    
     return (
         <>
             <Logout />
             <h1>Break Schedule</h1>
-            <select>
-                <option value="1">24/01/20</option>
-                <option value="2">25/01/20</option>
-                <option value="3">26/01/20</option>
-                <option value="4">27/01/20</option>
-            </select>
+            <input type="date" id="floater-date" onChange={() => onDateSelect()}/>
             <select>
                 <option value="1">Floater 1</option>
                 <option value="2">Floater 2</option>
                 <option value="3">Floater 3</option>
             </select>
-            <Break />
+            {
+                schedule && schedule.map((breakData) => (
+                    <Break {...breakData} />
+                ))
+            }
             <div class="floater-stats">
                 <div class="breaks-left" style={{borderStyle: "solid"}}>
                     <h4>Breaks Left:</h4>

@@ -1,7 +1,8 @@
 import React from "react"
+import ordinal from "ordinal"
 
 export default function Break(props) {
-    const breakTitle = `${props.employee}'s ${props.breakNum} ${props.breakDuration}`
+    const breakTitle = `${props.employee}'s ${ordinal(props.breakNum)} ${props.duration}`
     const scheduledTime = `${props.startTime}-${props.endTime}`
     return (
         <div style={{borderStyle: 'solid'}}>
