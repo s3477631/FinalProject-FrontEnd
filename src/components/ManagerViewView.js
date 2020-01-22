@@ -1,10 +1,25 @@
 import React from "react"
 import ManagerNav from "./ManagerNav"
-
+import axios from "axios"
 export default function ManagerViewView() {
+    const getData = () => {
+        console.log("clicked!")
+        // axios.get("http://boiling-inlet-28252.herokuapp.com/today", {
+        //     headers: {"content-type": "application/x-www-form-urlencoded"},
+        //     data: {date: '"12/12/2089"'}
+        // }).then(data => console.log(data))
+
+        axios({
+            method: 'post',
+            url: "https://boiling-inlet-28252.herokuapp.com/today",
+            data: { date:  "\"12/12/2089\""}
+          }).then(response => console.log(response))
+    }
     return (
         <>
             <ManagerNav />
+            <button onClick={()=>getData()}>Click me</button>
+            <p></p>
             <table>
                 <thead>
                     <th>Employee</th>
@@ -54,3 +69,14 @@ export default function ManagerViewView() {
         </>
     )
 }
+
+
+
+
+
+
+
+
+
+
+
