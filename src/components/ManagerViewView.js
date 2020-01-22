@@ -21,7 +21,6 @@ export default function ManagerViewView() {
         })
         .then(response => {
             setSchedule(Object.values(response.data[0]))
-            //console.log(response.data[0].values())
         }).catch(error => {
             setSchedule("There's nothing here!")
         })
@@ -30,7 +29,7 @@ export default function ManagerViewView() {
 
     return (
         <>
-            <ManagerNav />
+            <ManagerNav renderDateSelect />
             <button onClick={()=>getData()}>Click me</button>
             <p>{schedule}</p>
             <table>
