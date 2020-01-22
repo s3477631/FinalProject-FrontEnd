@@ -1,6 +1,7 @@
 import React from "react"
 import Break from "../components/Break"
 import Logout from "../components/Logout"
+import breakSchedules from "../modules/seeds"
 
 export default function FloaterView() {
     return (
