@@ -1,9 +1,11 @@
 import React from "react"
 import Break from "./Break"
+import Logout from "./Logout"
 
 export default function FloaterView() {
     return (
         <>
+            <Logout />
             <h1>Break Schedule</h1>
             <select>
                 <option value="1">24/01/20</option>
