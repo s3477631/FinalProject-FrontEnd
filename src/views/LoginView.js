@@ -1,5 +1,5 @@
 import React from "react"
-import { useGlobalState } from "./store"
+import { useGlobalState } from "../modules/store"
 
 export default function LoginView() {
 

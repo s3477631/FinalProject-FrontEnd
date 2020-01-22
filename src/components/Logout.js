@@ -1,5 +1,5 @@
 import React from "react"
-import { useGlobalState } from "./store"
+import { useGlobalState } from "../modules/store"
 import { Link } from "react-router-dom"
 
 export default function Logout() {
