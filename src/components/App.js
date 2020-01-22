@@ -17,28 +17,8 @@ export default function App() {
         token: localStorage.getItem("token") || null,
     }
 
-    const [store, dispatch] = useReducer(stateReducer, initialState)
+    const [ store, dispatch ] = useReducer(stateReducer, initialState)
     const { user } = store
-    
-    // Use effect hook to initialise component on mount
-	useEffect(()=> {
-
-        // get an existing user from localStorage
-        dispatch({
-            type: "setUser",
-            data: JSON.parse(localStorage.getItem("user"))
-		})
-        
-        // same with token
-        dispatch({
-            type: "setToken",
-            data: localStorage.getItem("token")
-        })
-
-        // return a function that specifies any actions on component unmount
-        return () => {}
-        
-    }, [])
     
     return (
         <StateContext.Provider value={{store, dispatch}}>
