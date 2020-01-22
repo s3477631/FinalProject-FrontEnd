@@ -14,6 +14,15 @@ export default function(state, action) {
                 token
             }
         }
+        case "setSession": {
+            const user = action.data.user
+            const token = action.data.token
+            return {
+                ...state, 
+                user,
+                token
+            }
+        }
         default: {
             return state
         }

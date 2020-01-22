@@ -15,13 +15,17 @@ export default function LoginView() {
         const token = "random"
         const user = {name: username}
         // update state
+        // dispatch({
+        //     type: "setToken",
+        //     data: token
+        // })
+        // dispatch({
+        //     type: "setUser",
+        //     data: user,
+        // })
         dispatch({
-            type: "setToken",
-            data: token
-        })
-        dispatch({
-            type: "setUser",
-            data: user,
+            type: "setSession",
+            data: {user, token}
         })
         localStorage.setItem("user", JSON.stringify(user))
         localStorage.setItem("token", token)
