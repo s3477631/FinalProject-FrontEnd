@@ -1,25 +1,38 @@
-import React from "react"
+import React, { useState } from "react"
 import ManagerNav from "./ManagerNav"
 import axios from "axios"
 export default function ManagerViewView() {
-    const getData = () => {
-        console.log("clicked!")
-        // axios.get("http://boiling-inlet-28252.herokuapp.com/today", {
-        //     headers: {"content-type": "application/x-www-form-urlencoded"},
-        //     data: {date: '"12/12/2089"'}
-        // }).then(data => console.log(data))
+
+    const [ schedule, setSchedule ] = useState(null)
+
+    function getData() {
+        
+        // retrive date in date picker 
+        let date = document.getElementById('date-select').value
+        // convert from YYYY-MM-DD to DD/MM/YYYY
+            .split("-")
+            .reverse()
+            .join("/")
 
         axios({
             method: 'post',
             url: "https://boiling-inlet-28252.herokuapp.com/today",
-            data: { date:  "\"12/12/2089\""}
-          }).then(response => console.log(response))
+            data: { date }
+        })
+        .then(response => {
+            setSchedule(Object.values(response.data[0]))
+            //console.log(response.data[0].values())
+        }).catch(error => {
+            setSchedule("There's nothing here!")
+        })
+
     }
+
     return (
         <>
             <ManagerNav />
             <button onClick={()=>getData()}>Click me</button>
-            <p></p>
+            <p>{schedule}</p>
             <table>
                 <thead>
                     <th>Employee</th>
