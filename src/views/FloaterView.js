@@ -6,7 +6,7 @@ import breakSchedules from "../modules/seeds"
 export default function FloaterView() {
 
     const [ schedule, setSchedule ] = useState(null)
-
+    
     const onDateSelect = () => {
 
         // retrive date in date picker 
@@ -21,13 +21,17 @@ export default function FloaterView() {
     
     useEffect(()=>{
 
-        // const now = new Date()
-        // const day = now.getDate()
-        // const month = now.getMonth()
-        // const year = now.getFullYear()
-        // debugger
-        // document.getElementById('floater-date').value = `${year}-${month}-${day}`
-        // console.log(now)
+        let date = new Date().toJSON().slice(0, 10)
+        document.getElementById('floater-date').value = date
+        
+        // convert from YYYY-MM-DD to DD/MM/YYYY
+        date = date
+            .split("-")
+            .reverse()
+            .join("/")
+        
+        setSchedule(breakSchedules[date])
+
     }, [])
 
     return (

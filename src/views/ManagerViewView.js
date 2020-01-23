@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import ManagerNav from "../components/ManagerNav"
-import axios from "axios"
+// import axios from "axios"
 
 // seeds
 import breakSchedules from "../modules/seeds"

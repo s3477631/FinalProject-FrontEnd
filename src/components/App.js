@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react"
+import React, { useReducer } from "react"
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import FloaterView from "../views/FloaterView"
 import LoginView from "../views/LoginView"

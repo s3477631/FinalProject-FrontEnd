@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react"
 import ordinal from "ordinal"
 import prettyMs from "pretty-ms"
+import BreakGrid from "../styles/BreakGrid"
 
 export default function Break(props) {
+
     const [ elapsedTime, setElapsedTime ] = useState(0)
     const [ started, setStarted ] = useState(null)
-    const breakTitle = `${props.employee}'s ${ordinal(props.breakNum)} ${props.duration}`
+
+    const breakTitle = `${props.employee}'s ${ordinal(props.breakNum || 1)} ${props.duration}`
     const scheduledTime = `${props.startTime}-${props.endTime}`
+    const elapsedTimeString = prettyMs(elapsedTime, {colonNotation: true, secondsDecimalDigits: 0})
 
     const onStartChecked = () => {
         !started && setStarted(Date.now())
@@ -24,15 +28,16 @@ export default function Break(props) {
 
     console.log(started)
     return (
-        <div style={{borderStyle: 'solid'}}>
-            <h4 className="break-title">{breakTitle}</h4>
-            <p className="scheduled-time">{scheduledTime}</p>
+        <BreakGrid>
+            <h4>{breakTitle}</h4>
+            <div></div>
+            <p>{scheduledTime}</p>
             <input type="checkbox" id="startCheckBox" onChange={()=>onStartChecked()}/>
-            <p className="time-elapsed">{prettyMs(elapsedTime, {colonNotation: true, secondsDecimalDigits: 0})}</p>
+            <p>{elapsedTimeString}</p>
             <input type="checkbox" id="finishCheckBox" onChange={()=>onFinishChecked()}/>
-            <p>Started</p>s
+            <p>Started</p>
             <p>Time Elapsed</p>
             <p>Finished</p>
-        </div>
+        </BreakGrid>
     )
 }
