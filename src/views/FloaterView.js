@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Break from "../components/Break"
 import Logout from "../components/Logout"
 import breakSchedules from "../modules/seeds"
@@ -19,6 +19,17 @@ export default function FloaterView() {
         setSchedule(breakSchedules[date])
     }
     
+    useEffect(()=>{
+
+        // const now = new Date()
+        // const day = now.getDate()
+        // const month = now.getMonth()
+        // const year = now.getFullYear()
+        // debugger
+        // document.getElementById('floater-date').value = `${year}-${month}-${day}`
+        // console.log(now)
+    }, [])
+
     return (
         <>
             <Logout />

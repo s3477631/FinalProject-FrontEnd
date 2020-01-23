@@ -9,7 +9,7 @@ export default function ManagerViewView() {
 
     const [ schedule, setSchedule ] = useState(null)
 
-    function getData() {
+    function getData() { // change this to work with date onChange
         
         // retrive date in date picker 
         let date = document.getElementById('date-select').value
