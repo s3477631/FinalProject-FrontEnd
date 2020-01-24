@@ -2,11 +2,19 @@ import React, { useState, useEffect } from "react"
 import Break from "../components/Break"
 import Logout from "../components/Logout"
 import breakSchedules from "../modules/seeds"
+import FloaterStats from "../styles/FloaterStats"
+import BorderedDiv from "../styles/BorderedDiv"
 
 export default function FloaterView() {
 
-    const [ schedule, setSchedule ] = useState(null)
-    
+    const [ schedule, setSchedule ] = useState({
+        totalFifteens: 0,
+        totalThirties: 0,
+        totalBreakTime: 0,
+        goalTime: 960,
+        breaks: []
+    })
+
     const onDateSelect = () => {
 
         // retrive date in date picker 
@@ -19,6 +27,7 @@ export default function FloaterView() {
         setSchedule(breakSchedules[date])
     }
     
+    // on mount, set date to today and render
     useEffect(()=>{
 
         let date = new Date().toJSON().slice(0, 10)
@@ -45,26 +54,26 @@ export default function FloaterView() {
                 <option value="3">Floater 3</option>
             </select>
             {
-                schedule && schedule.map((breakData) => (
+                schedule && schedule.breaks.map((breakData) => (
                     <Break {...breakData} />
                 ))
             }
-            <div class="floater-stats">
-                <div class="breaks-left" style={{borderStyle: "solid"}}>
+            <FloaterStats>
+                <BorderedDiv>
                     <h4>Breaks Left:</h4>
-                    <p class="fifteens">20 x 15 min</p>
-                    <p class="thirties">10 x 30 min</p>
-                    <p class="total">10hrs total</p>
-                </div>
-                <div class="goal" style={{borderStyle: "solid"}}>
+                    <p>{schedule && schedule.totalFifteens} x 15min</p>
+                    <p>{schedule && schedule.totalThirties} x 30min</p>
+                    <p>{schedule && schedule.totalBreakTime / 60}hrs total</p>
+                </BorderedDiv>
+                <BorderedDiv>
                     <h4>Goal:</h4>
-                    <p>4:00pm</p>
-                </div>
-                <div class="projected" style={{borderStyle: "solid"}}>
+                    <p>{schedule && schedule.goalTime}</p>
+                </BorderedDiv>
+                <BorderedDiv>
                     <h4>Projected:</h4>
                     <p>3:30pm</p>
-                </div>
-            </div>
+                </BorderedDiv>
+            </FloaterStats>
         </>
     )
 }

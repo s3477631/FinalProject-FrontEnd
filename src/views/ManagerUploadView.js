@@ -18,7 +18,8 @@ export default function ManagerUploadView() {
         data.append('csvFile', newFile)
         axios.post("https://boiling-inlet-28252.herokuapp.com/csvupload", data)
         .then(response => {
-            // update state
+            // update 
+            console.log(response)
             setFile(response)
             setLoading(false)
         }).catch(error => {
