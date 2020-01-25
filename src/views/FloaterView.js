@@ -2,40 +2,84 @@ import React, { useState, useEffect } from "react"
 import Break from "../components/Break"
 import Logout from "../components/Logout"
 import breakSchedules from "../modules/seeds"
+import FloaterStats from "../styles/FloaterStats"
+import BorderedDiv from "../styles/BorderedDiv"
+import moment from "moment"
 
 export default function FloaterView() {
 
-    const [ schedule, setSchedule ] = useState(null)
-    
-    const onDateSelect = () => {
+    const [ schedule, setSchedule ] = useState({
+        totalFifteens: 0,
+        totalThirties: 0,
+        totalBreakTime: 0,
+        goalTime: 960,
+        breaks: []
+    })
 
-        // retrive date in date picker 
-        let date = document.getElementById('floater-date').value
-        // convert from YYYY-MM-DD to DD/MM/YYYY
-            .split("-")
-            .reverse()
-            .join("/")
+    const projectedTimeMs = Date.now() + schedule.totalBreakTime * 60 * 1000
+    const goalTimeMs = new Date().setHours(0,0,0,0) + schedule.goalTime * 60 * 1000
+    const displayProjectedTime = moment(projectedTimeMs).format("h:mm a")
+    const displayGoalTime = moment(goalTimeMs).format("h:mm a")
+
+    const setDate = (date) => {
         
-        setSchedule(breakSchedules[date])
+        // update value of date picker
+        document.getElementById('floater-date').value = date
+
+        // convert from YYYY-MM-DD to DD/MM/YYYY
+        const formattedDate = date.split("-").reverse().join("/")
+
+        // update state
+        setSchedule(breakSchedules[formattedDate])
     }
     
+    const onDateSelect = () => {
+        setDate(document.getElementById('floater-date').value)
+    }
+
+    // on mount, set date to today and render
     useEffect(()=>{
 
-        let date = new Date().toJSON().slice(0, 10)
-        document.getElementById('floater-date').value = date
-        
-        // convert from YYYY-MM-DD to DD/MM/YYYY
-        date = date
-            .split("-")
-            .reverse()
-            .join("/")
-        
-        setSchedule(breakSchedules[date])
+        // comment this
+        const today = new Date().toJSON().slice(0, 10)
+        setDate(today)
 
     }, [])
 
+    const onBreakFinishChecked = (breakDuration, isChecked) => {
+        // recalculate total breaks
+        const newTotal = (isChecked ? -breakDuration : breakDuration)
+        let newFifteens = schedule.totalFifteens
+        let newThirties = schedule.totalThirties
+
+        if (breakDuration == 15) {
+            if (isChecked) {
+                newFifteens -=1
+            } else {
+                newFifteens +=1
+            }
+        } else {
+            if (isChecked) {
+                newThirties -=1
+            } else {
+                newThirties +=1
+            }
+        }
+        console.log(newFifteens, newThirties)
+
+        setSchedule({
+            ...schedule,
+            totalBreakTime: schedule.totalBreakTime += newTotal,
+            totalFifteens: newFifteens,
+            totalThirties: newThirties
+        })
+        // add to current time which give projected finish time
+        // compare projected to goal
+        // render something if projected beyond goal
+    }
+
     return (
-        <>
+        <div style={{paddingBottom: 200}}>
             <Logout />
             <h1>Break Schedule</h1>
             <input type="date" id="floater-date" onChange={() => onDateSelect()}/>
@@ -45,27 +89,27 @@ export default function FloaterView() {
                 <option value="3">Floater 3</option>
             </select>
             {
-                schedule && schedule.map((breakData) => (
-                    <Break {...breakData} />
+                schedule && schedule.breaks.map((breakData) => (
+                    <Break {...breakData} onCheckChange={onBreakFinishChecked} />
                 ))
             }
-            <div class="floater-stats">
-                <div class="breaks-left" style={{borderStyle: "solid"}}>
+            <FloaterStats>
+                <BorderedDiv>
                     <h4>Breaks Left:</h4>
-                    <p class="fifteens">20 x 15 min</p>
-                    <p class="thirties">10 x 30 min</p>
-                    <p class="total">10hrs total</p>
-                </div>
-                <div class="goal" style={{borderStyle: "solid"}}>
+                    <p>{schedule && schedule.totalFifteens} x 15min</p>
+                    <p>{schedule && schedule.totalThirties} x 30min</p>
+                    <p>{schedule && schedule.totalBreakTime / 60}hrs total</p>
+                </BorderedDiv>
+                <BorderedDiv>
                     <h4>Goal:</h4>
-                    <p>4:00pm</p>
-                </div>
-                <div class="projected" style={{borderStyle: "solid"}}>
+                    <p>{schedule && displayGoalTime}</p>
+                </BorderedDiv>
+                <BorderedDiv>
                     <h4>Projected:</h4>
-                    <p>3:30pm</p>
-                </div>
-            </div>
-        </>
+                    <p>{schedule && displayProjectedTime}</p>
+                </BorderedDiv>
+            </FloaterStats>
+        </div>
     )
 }
 
