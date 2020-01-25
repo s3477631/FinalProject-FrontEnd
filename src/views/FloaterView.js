@@ -4,6 +4,7 @@ import Logout from "../components/Logout"
 import breakSchedules from "../modules/seeds"
 import FloaterStats from "../styles/FloaterStats"
 import BorderedDiv from "../styles/BorderedDiv"
+import moment from "moment"
 
 export default function FloaterView() {
 
@@ -14,6 +15,11 @@ export default function FloaterView() {
         goalTime: 960,
         breaks: []
     })
+
+    const projectedTimeMs = Date.now() + schedule.totalBreakTime * 60 * 1000
+    const goalTimeMs = new Date().setHours(0,0,0,0) + schedule.goalTime * 60 * 1000
+    const displayProjectedTime = moment(projectedTimeMs).format("h:mm a")
+    const displayGoalTime = moment(goalTimeMs).format("h:mm a")
 
     const setDate = (date) => {
         
@@ -43,10 +49,29 @@ export default function FloaterView() {
     const onBreakFinishChecked = (breakDuration, isChecked) => {
         // recalculate total breaks
         const newTotal = (isChecked ? -breakDuration : breakDuration)
-        console.log(isChecked)
+        let newFifteens = schedule.totalFifteens
+        let newThirties = schedule.totalThirties
+
+        if (breakDuration == 15) {
+            if (isChecked) {
+                newFifteens -=1
+            } else {
+                newFifteens +=1
+            }
+        } else {
+            if (isChecked) {
+                newThirties -=1
+            } else {
+                newThirties +=1
+            }
+        }
+        console.log(newFifteens, newThirties)
+
         setSchedule({
+            ...schedule,
             totalBreakTime: schedule.totalBreakTime += newTotal,
-            ...schedule
+            totalFifteens: newFifteens,
+            totalThirties: newThirties
         })
         // add to current time which give projected finish time
         // compare projected to goal
@@ -77,11 +102,11 @@ export default function FloaterView() {
                 </BorderedDiv>
                 <BorderedDiv>
                     <h4>Goal:</h4>
-                    <p>{schedule && schedule.goalTime}</p>
+                    <p>{schedule && displayGoalTime}</p>
                 </BorderedDiv>
                 <BorderedDiv>
                     <h4>Projected:</h4>
-                    <p>{schedule && schedule.totalBreakTime}</p>
+                    <p>{schedule && displayProjectedTime}</p>
                 </BorderedDiv>
             </FloaterStats>
         </div>

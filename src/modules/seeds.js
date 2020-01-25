@@ -1,5 +1,5 @@
 const breakSchedules = {
-    "24/01/2020": {
+    "25/01/2020": {
         totalFifteens: 8,
         totalThirties: 4,
         totalBreakTime: 240,
