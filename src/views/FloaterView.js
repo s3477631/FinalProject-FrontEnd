@@ -15,36 +15,46 @@ export default function FloaterView() {
         breaks: []
     })
 
-    const onDateSelect = () => {
-
-        // retrive date in date picker 
-        let date = document.getElementById('floater-date').value
-        // convert from YYYY-MM-DD to DD/MM/YYYY
-            .split("-")
-            .reverse()
-            .join("/")
+    const setDate = (date) => {
         
-        setSchedule(breakSchedules[date])
+        // update value of date picker
+        document.getElementById('floater-date').value = date
+
+        // convert from YYYY-MM-DD to DD/MM/YYYY
+        const formattedDate = date.split("-").reverse().join("/")
+
+        // update state
+        setSchedule(breakSchedules[formattedDate])
     }
     
+    const onDateSelect = () => {
+        setDate(document.getElementById('floater-date').value)
+    }
+
     // on mount, set date to today and render
     useEffect(()=>{
 
-        let date = new Date().toJSON().slice(0, 10)
-        document.getElementById('floater-date').value = date
-        
-        // convert from YYYY-MM-DD to DD/MM/YYYY
-        date = date
-            .split("-")
-            .reverse()
-            .join("/")
-        
-        setSchedule(breakSchedules[date])
+        // comment this
+        const today = new Date().toJSON().slice(0, 10)
+        setDate(today)
 
     }, [])
 
+    const onBreakFinishChecked = (breakDuration, isChecked) => {
+        // recalculate total breaks
+        const newTotal = (isChecked ? -breakDuration : breakDuration)
+        console.log(isChecked)
+        setSchedule({
+            totalBreakTime: schedule.totalBreakTime += newTotal,
+            ...schedule
+        })
+        // add to current time which give projected finish time
+        // compare projected to goal
+        // render something if projected beyond goal
+    }
+
     return (
-        <>
+        <div style={{paddingBottom: 200}}>
             <Logout />
             <h1>Break Schedule</h1>
             <input type="date" id="floater-date" onChange={() => onDateSelect()}/>
@@ -55,7 +65,7 @@ export default function FloaterView() {
             </select>
             {
                 schedule && schedule.breaks.map((breakData) => (
-                    <Break {...breakData} />
+                    <Break {...breakData} onCheckChange={onBreakFinishChecked} />
                 ))
             }
             <FloaterStats>
@@ -71,10 +81,10 @@ export default function FloaterView() {
                 </BorderedDiv>
                 <BorderedDiv>
                     <h4>Projected:</h4>
-                    <p>3:30pm</p>
+                    <p>{schedule && schedule.totalBreakTime}</p>
                 </BorderedDiv>
             </FloaterStats>
-        </>
+        </div>
     )
 }
 
