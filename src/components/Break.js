@@ -31,7 +31,7 @@ export default function Break({employee, breakNum, duration, startTime, endTime,
     })
 
     return (
-        <BreakGrid>
+        <BreakGrid started={started}>
             <h4>{breakTitle}</h4>
             <div></div>
             <p>{scheduledTime}</p>
