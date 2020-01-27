@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const FloaterStats = styled.div`
+export const FloaterStatsGrid = styled.div`
     border-style: solid;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -10,4 +10,8 @@ const FloaterStats = styled.div`
     width: 100%
 `
 
-export default FloaterStats
+export const FloatHeader = styled.h1`
+    text-align: center;
+`
+
+export default FloaterStatsGrid

@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from "react"
 import Break from "../components/Break"
 import Logout from "../components/Logout"
 import breakSchedules from "../modules/seeds"
-import FloaterStats from "../styles/FloaterStats"
+import FloaterStatsGrid, { FloatHeader } from "../styles/FloaterViewStyles"
 import BorderedDiv from "../styles/BorderedDiv"
 import moment from "moment"
 
@@ -51,7 +51,7 @@ const initialState = {
 }
 
 export default function FloaterView() {
-    // debugger
+    
     const [ floatData, dispatchFloatData ] = useReducer(floatReducer, initialState)
     
     const setDate = (date) => {
@@ -85,7 +85,7 @@ export default function FloaterView() {
     }, [])
 
     const onBreakFinishChecked = (breakDuration, isChecked) => {
-        //debugger
+        
         // recalculate total breaks
         const newTotal = (isChecked ? -breakDuration : breakDuration)
         let newFifteens = floatData.totalFifteens
@@ -121,7 +121,7 @@ export default function FloaterView() {
     return (
         <div style={{paddingBottom: 200}}>
             <Logout />
-            <h1>Break Schedule</h1>
+            <FloatHeader>Break Schedule</FloatHeader>
             <input type="date" id="floater-date" onChange={() => onDateSelect()}/>
             <select>
                 <option value="1">Floater 1</option>
@@ -133,7 +133,7 @@ export default function FloaterView() {
                     <Break key={index} {...breakData} onCheckChange={onBreakFinishChecked} />
                 ))
             }
-            <FloaterStats>
+            <FloaterStatsGrid>
                 <BorderedDiv>
                     <h4>Breaks Left:</h4>
                     <p>{floatData && floatData.totalFifteens} x 15min</p>
@@ -149,7 +149,7 @@ export default function FloaterView() {
                     <p>{floatData && moment(floatData.projectedTimeMs).format("h:mm a")}</p>
                     <p>{floatData && floatData.projectedIsPastGoal ? "LATE" : "ON TRACK"}</p>
                 </BorderedDiv>
-            </FloaterStats>
+            </FloaterStatsGrid>
         </div>
     )
 }

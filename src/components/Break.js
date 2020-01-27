@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import ordinal from "ordinal"
 import prettyMs from "pretty-ms"
-import BreakGrid from "../styles/BreakGrid"
+import BreakGrid, { BreakHeader, ScheduledTime, CenteredCell } from "../styles/BreakStyles"
 
 export default function Break({employee, breakNum, duration, startTime, endTime, onCheckChange}) {
 
@@ -32,15 +32,26 @@ export default function Break({employee, breakNum, duration, startTime, endTime,
 
     return (
         <BreakGrid started={started}>
-            <h4>{breakTitle}</h4>
-            <div></div>
-            <p>{scheduledTime}</p>
-            <input type="checkbox" onChange={()=>onStartChecked()}/>
-            <p>{elapsedTimeString}</p>
-            <input type="checkbox" onChange={e=>onFinishChecked(e)}/>
-            <p>Started</p>
-            <p>Time Elapsed</p>
-            <p>Finished</p>
+            <BreakHeader><h4>{breakTitle}</h4></BreakHeader>
+            <ScheduledTime>{scheduledTime}</ScheduledTime>
+            <CenteredCell>
+                <input type="checkbox" onChange={()=>onStartChecked()}/>
+            </CenteredCell>
+            <CenteredCell>
+                <p>{elapsedTimeString}</p>
+            </CenteredCell>
+            <CenteredCell>
+                <input type="checkbox" onChange={e=>onFinishChecked(e)}/>
+            </CenteredCell>
+            <CenteredCell>
+                <p>Started</p>
+            </CenteredCell>
+            <CenteredCell>
+                <p>Time Elapsed</p>
+            </CenteredCell>
+            <CenteredCell>
+                <p>Finished</p>
+            </CenteredCell>
         </BreakGrid>
     )
 }
