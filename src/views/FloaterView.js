@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useReducer, useEffect } from "react"
 import Break from "../components/Break"
 import Logout from "../components/Logout"
 import breakSchedules from "../modules/seeds"
@@ -6,21 +6,54 @@ import FloaterStats from "../styles/FloaterStats"
 import BorderedDiv from "../styles/BorderedDiv"
 import moment from "moment"
 
+const floatReducer = (state, action) => {
+    switch (action.type) {
+        case "setSchedule": {
+            console.log("setSchedule")
+            const newSchedule = action.data
+            const goalTimeMs = new Date().setHours(0,0,0,0) + newSchedule.goalTime * 60000
+            const projectedTimeMs = Date.now() + newSchedule.totalBreakTime * 60000
+            return {
+                ...newSchedule,
+                goalTimeMs,
+                projectedTimeMs,
+                projectedIsPastGoal: projectedTimeMs > goalTimeMs,
+            }
+        }
+        case "updateBreaks": {
+            const { totalFifteens, totalThirties, totalBreakTime } = action.data
+            const projectedTimeMs = Date.now() + totalBreakTime * 60000
+            console.log(state.projectedTimeMs, projectedTimeMs)
+            return {
+                ...state,
+                totalFifteens, 
+                totalThirties,
+                totalBreakTime,
+                projectedTimeMs,
+                projectedIsPastGoal: projectedTimeMs > state.goalTimeMs,
+            }
+        }
+        default: {
+            return state
+        }
+    }
+}
+
+const initialState = {
+    totalFifteens: 0,
+    totalThirties: 0,
+    totalBreakTime: 0,
+    goalTime: 0,
+    breaks: [],
+    goalTimeMs: 0,
+    projectedTimeMs: 0,
+    projectedIsPastGoal: false,
+}
+
 export default function FloaterView() {
-
-    const [ schedule, setSchedule ] = useState({
-        totalFifteens: 0,
-        totalThirties: 0,
-        totalBreakTime: 0,
-        goalTime: 960,
-        breaks: []
-    })
-
-    const projectedTimeMs = Date.now() + schedule.totalBreakTime * 60 * 1000
-    const goalTimeMs = new Date().setHours(0,0,0,0) + schedule.goalTime * 60 * 1000
-    const displayProjectedTime = moment(projectedTimeMs).format("h:mm a")
-    const displayGoalTime = moment(goalTimeMs).format("h:mm a")
-
+    // debugger
+    const [ floatData, dispatchFloatData ] = useReducer(floatReducer, initialState)
+    
     const setDate = (date) => {
         
         // update value of date picker
@@ -30,7 +63,12 @@ export default function FloaterView() {
         const formattedDate = date.split("-").reverse().join("/")
 
         // update state
-        setSchedule(breakSchedules[formattedDate])
+        const newSchedule = breakSchedules[formattedDate]
+        dispatchFloatData({
+            type: "setSchedule",
+            data: newSchedule,
+        })
+
     }
     
     const onDateSelect = () => {
@@ -40,19 +78,20 @@ export default function FloaterView() {
     // on mount, set date to today and render
     useEffect(()=>{
 
-        // comment this
+        // get just the date out of new Date().toJSON
         const today = new Date().toJSON().slice(0, 10)
         setDate(today)
 
     }, [])
 
     const onBreakFinishChecked = (breakDuration, isChecked) => {
+        //debugger
         // recalculate total breaks
         const newTotal = (isChecked ? -breakDuration : breakDuration)
-        let newFifteens = schedule.totalFifteens
-        let newThirties = schedule.totalThirties
+        let newFifteens = floatData.totalFifteens
+        let newThirties = floatData.totalThirties
 
-        if (breakDuration == 15) {
+        if (breakDuration === 15) {
             if (isChecked) {
                 newFifteens -=1
             } else {
@@ -65,17 +104,18 @@ export default function FloaterView() {
                 newThirties +=1
             }
         }
-        console.log(newFifteens, newThirties)
-
-        setSchedule({
-            ...schedule,
-            totalBreakTime: schedule.totalBreakTime += newTotal,
-            totalFifteens: newFifteens,
-            totalThirties: newThirties
+        
+        dispatchFloatData({
+            type: "updateBreaks",
+            data: {
+                totalBreakTime: floatData.totalBreakTime += newTotal,
+                totalFifteens: newFifteens,
+                totalThirties: newThirties
+            }
         })
-        // add to current time which give projected finish time
-        // compare projected to goal
-        // render something if projected beyond goal
+        
+        console.log("onBreakFinishChecked", newThirties, newFifteens)
+
     }
 
     return (
@@ -89,24 +129,25 @@ export default function FloaterView() {
                 <option value="3">Floater 3</option>
             </select>
             {
-                schedule && schedule.breaks.map((breakData) => (
-                    <Break {...breakData} onCheckChange={onBreakFinishChecked} />
+                floatData && floatData.breaks.map((breakData, index) => (
+                    <Break key={index} {...breakData} onCheckChange={onBreakFinishChecked} />
                 ))
             }
             <FloaterStats>
                 <BorderedDiv>
                     <h4>Breaks Left:</h4>
-                    <p>{schedule && schedule.totalFifteens} x 15min</p>
-                    <p>{schedule && schedule.totalThirties} x 30min</p>
-                    <p>{schedule && schedule.totalBreakTime / 60}hrs total</p>
+                    <p>{floatData && floatData.totalFifteens} x 15min</p>
+                    <p>{floatData && floatData.totalThirties} x 30min</p>
+                    <p>{floatData && floatData.totalBreakTime / 60}hrs total</p>
                 </BorderedDiv>
                 <BorderedDiv>
                     <h4>Goal:</h4>
-                    <p>{schedule && displayGoalTime}</p>
+                    <p>{floatData && moment(floatData.goalTimeMs).format("h:mm a")}</p>
                 </BorderedDiv>
                 <BorderedDiv>
                     <h4>Projected:</h4>
-                    <p>{schedule && displayProjectedTime}</p>
+                    <p>{floatData && moment(floatData.projectedTimeMs).format("h:mm a")}</p>
+                    <p>{floatData && floatData.projectedIsPastGoal ? "LATE" : "ON TRACK"}</p>
                 </BorderedDiv>
             </FloaterStats>
         </div>
