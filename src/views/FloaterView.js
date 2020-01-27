@@ -9,6 +9,7 @@ import moment from "moment"
 const floatReducer = (state, action) => {
     switch (action.type) {
         case "setSchedule": {
+            console.log("setSchedule")
             const newSchedule = action.data
             const goalTimeMs = new Date().setHours(0,0,0,0) + newSchedule.goalTime * 60000
             const projectedTimeMs = new Date() + newSchedule.totalBreakTime * 60000
@@ -22,7 +23,7 @@ const floatReducer = (state, action) => {
         case "updateBreaks": {
             const { totalFifteens, totalThirties, totalBreakTime } = action.data
             const projectedTimeMs = new Date() + totalBreakTime * 60000
-            console.log("breaks")
+            console.log(state.projectedTimeMs, projectedTimeMs)
             return {
                 ...state,
                 totalFifteens, 
@@ -50,9 +51,9 @@ const initialState = {
 }
 
 export default function FloaterView() {
-
+    // debugger
     const [ floatData, dispatchFloatData ] = useReducer(floatReducer, initialState)
-    console.log(floatData)
+    
     const setDate = (date) => {
         
         // update value of date picker
@@ -84,7 +85,7 @@ export default function FloaterView() {
     }, [])
 
     const onBreakFinishChecked = (breakDuration, isChecked) => {
-        
+        //debugger
         // recalculate total breaks
         const newTotal = (isChecked ? -breakDuration : breakDuration)
         let newFifteens = floatData.totalFifteens
@@ -105,13 +106,15 @@ export default function FloaterView() {
         }
         
         dispatchFloatData({
-            action: "updateBreaks",
+            type: "updateBreaks",
             data: {
                 totalBreakTime: floatData.totalBreakTime += newTotal,
                 totalFifteens: newFifteens,
                 totalThirties: newThirties
             }
         })
+        
+        console.log("onBreakFinishChecked", newThirties, newFifteens)
 
     }
 
