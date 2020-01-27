@@ -3,7 +3,7 @@ const breakSchedules = {
         totalFifteens: 8,
         totalThirties: 4,
         totalBreakTime: 240,
-        goalTime: 0,
+        goalTime: 960,
         breaks: [
             {
                 employee: "CoWorker 1", 

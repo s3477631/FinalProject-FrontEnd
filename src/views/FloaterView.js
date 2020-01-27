@@ -12,7 +12,7 @@ const floatReducer = (state, action) => {
             console.log("setSchedule")
             const newSchedule = action.data
             const goalTimeMs = new Date().setHours(0,0,0,0) + newSchedule.goalTime * 60000
-            const projectedTimeMs = new Date() + newSchedule.totalBreakTime * 60000
+            const projectedTimeMs = Date.now() + newSchedule.totalBreakTime * 60000
             return {
                 ...newSchedule,
                 goalTimeMs,
@@ -22,7 +22,7 @@ const floatReducer = (state, action) => {
         }
         case "updateBreaks": {
             const { totalFifteens, totalThirties, totalBreakTime } = action.data
-            const projectedTimeMs = new Date() + totalBreakTime * 60000
+            const projectedTimeMs = Date.now() + totalBreakTime * 60000
             console.log(state.projectedTimeMs, projectedTimeMs)
             return {
                 ...state,
