@@ -2,8 +2,7 @@ import React, { useReducer, useEffect } from "react"
 import Break from "../components/Break"
 import Logout from "../components/Logout"
 import breakSchedules from "../modules/seeds"
-import FloaterStats from "../styles/FloaterStats"
-import BorderedDiv from "../styles/BorderedDiv"
+import FloaterStatsGrid, { FloatHeader, FloatStatHeader, BreaksList, StatCell, ProjectedTimeCell } from "../styles/FloaterViewStyles"
 import moment from "moment"
 
 const floatReducer = (state, action) => {
@@ -51,7 +50,7 @@ const initialState = {
 }
 
 export default function FloaterView() {
-    // debugger
+    
     const [ floatData, dispatchFloatData ] = useReducer(floatReducer, initialState)
     
     const setDate = (date) => {
@@ -85,7 +84,7 @@ export default function FloaterView() {
     }, [])
 
     const onBreakFinishChecked = (breakDuration, isChecked) => {
-        //debugger
+        
         // recalculate total breaks
         const newTotal = (isChecked ? -breakDuration : breakDuration)
         let newFifteens = floatData.totalFifteens
@@ -121,7 +120,7 @@ export default function FloaterView() {
     return (
         <div style={{paddingBottom: 200}}>
             <Logout />
-            <h1>Break Schedule</h1>
+            <FloatHeader>Break Schedule</FloatHeader>
             <input type="date" id="floater-date" onChange={() => onDateSelect()}/>
             <select>
                 <option value="1">Floater 1</option>
@@ -133,23 +132,24 @@ export default function FloaterView() {
                     <Break key={index} {...breakData} onCheckChange={onBreakFinishChecked} />
                 ))
             }
-            <FloaterStats>
-                <BorderedDiv>
-                    <h4>Breaks Left:</h4>
-                    <p>{floatData && floatData.totalFifteens} x 15min</p>
-                    <p>{floatData && floatData.totalThirties} x 30min</p>
-                    <p>{floatData && floatData.totalBreakTime / 60}hrs total</p>
-                </BorderedDiv>
-                <BorderedDiv>
-                    <h4>Goal:</h4>
+            <FloaterStatsGrid>
+                <StatCell>
+                    <FloatStatHeader>Breaks Left:</FloatStatHeader>
+                    <BreaksList>
+                        <li>{floatData && floatData.totalFifteens} x 15min</li>
+                        <li>{floatData && floatData.totalThirties} x 30min</li>
+                        <li>{floatData && floatData.totalBreakTime / 60}hrs total</li>
+                    </BreaksList>
+                </StatCell>
+                <StatCell>
+                    <FloatStatHeader>Goal:</FloatStatHeader>
                     <p>{floatData && moment(floatData.goalTimeMs).format("h:mm a")}</p>
-                </BorderedDiv>
-                <BorderedDiv>
-                    <h4>Projected:</h4>
+                </StatCell>
+                <ProjectedTimeCell projectedIsPastGoal={floatData.projectedIsPastGoal}>
+                    <FloatStatHeader>Projected:</FloatStatHeader>
                     <p>{floatData && moment(floatData.projectedTimeMs).format("h:mm a")}</p>
-                    <p>{floatData && floatData.projectedIsPastGoal ? "LATE" : "ON TRACK"}</p>
-                </BorderedDiv>
-            </FloaterStats>
+                </ProjectedTimeCell>
+            </FloaterStatsGrid>
         </div>
     )
 }
