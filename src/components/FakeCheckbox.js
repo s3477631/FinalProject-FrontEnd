@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 
 const CheckboxContainer = styled.label`
@@ -26,14 +26,34 @@ const CheckboxGraphic = styled.span`
     left: -2rem;
     height: 4rem;
     width: 4rem;
-    background-color: #eee;
+    background-color: ${props => props.checked ? "green" : "#eee"};
+    &:after {
+        content: "";
+        position: absolute;
+        display: ${props => props.checked ? "block" : "none"};
+        left: 1.4rem;
+        top: 0.5rem;
+        width: 1rem;
+        height: 2rem;
+        border: solid white;
+        border-width: 0 5px 5px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
 `
 
 const FakeCheckbox = ({onChange}) => {
+    const [ checked, setChecked ] = useState(null)
+    const onCheck = event => {
+        const isChecked = event.target.checked
+        setChecked(isChecked)
+        onChange(event)
+    }
     return (
         <CheckboxContainer>
-            <HiddenInput type="checkbox" onChange={onChange}/>
-            <CheckboxGraphic />
+            <HiddenInput type="checkbox" onChange={onCheck}/>
+            <CheckboxGraphic checked={checked}/>
         </CheckboxContainer>
     )
 }
