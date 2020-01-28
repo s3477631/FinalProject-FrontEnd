@@ -2,8 +2,7 @@ import React, { useReducer, useEffect } from "react"
 import Break from "../components/Break"
 import Logout from "../components/Logout"
 import breakSchedules from "../modules/seeds"
-import FloaterStatsGrid, { FloatHeader } from "../styles/FloaterViewStyles"
-import BorderedDiv from "../styles/BorderedDiv"
+import FloaterStatsGrid, { FloatHeader, FloatStatHeader, BreaksList, StatCell, ProjectedTimeCell } from "../styles/FloaterViewStyles"
 import moment from "moment"
 
 const floatReducer = (state, action) => {
@@ -134,21 +133,22 @@ export default function FloaterView() {
                 ))
             }
             <FloaterStatsGrid>
-                <BorderedDiv>
-                    <h4>Breaks Left:</h4>
-                    <p>{floatData && floatData.totalFifteens} x 15min</p>
-                    <p>{floatData && floatData.totalThirties} x 30min</p>
-                    <p>{floatData && floatData.totalBreakTime / 60}hrs total</p>
-                </BorderedDiv>
-                <BorderedDiv>
-                    <h4>Goal:</h4>
+                <StatCell>
+                    <FloatStatHeader>Breaks Left:</FloatStatHeader>
+                    <BreaksList>
+                        <li>{floatData && floatData.totalFifteens} x 15min</li>
+                        <li>{floatData && floatData.totalThirties} x 30min</li>
+                        <li>{floatData && floatData.totalBreakTime / 60}hrs total</li>
+                    </BreaksList>
+                </StatCell>
+                <StatCell>
+                    <FloatStatHeader>Goal:</FloatStatHeader>
                     <p>{floatData && moment(floatData.goalTimeMs).format("h:mm a")}</p>
-                </BorderedDiv>
-                <BorderedDiv>
-                    <h4>Projected:</h4>
+                </StatCell>
+                <ProjectedTimeCell projectedIsPastGoal={floatData.projectedIsPastGoal}>
+                    <FloatStatHeader>Projected:</FloatStatHeader>
                     <p>{floatData && moment(floatData.projectedTimeMs).format("h:mm a")}</p>
-                    <p>{floatData && floatData.projectedIsPastGoal ? "LATE" : "ON TRACK"}</p>
-                </BorderedDiv>
+                </ProjectedTimeCell>
             </FloaterStatsGrid>
         </div>
     )

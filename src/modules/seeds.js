@@ -1,9 +1,9 @@
 const breakSchedules = {
-    "27/01/2020": {
+    "28/01/2020": {
         totalFifteens: 8,
         totalThirties: 4,
         totalBreakTime: 240,
-        goalTime: 960,
+        goalTime: 800,
         breaks: [
             {
                 employee: "CoWorker 1", 
