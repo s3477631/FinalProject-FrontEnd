@@ -32,6 +32,12 @@ const floatReducer = (state, action) => {
                 projectedIsPastGoal: projectedTimeMs > state.goalTimeMs,
             }
         }
+        case "updateFloater": {
+            return {
+                ...state,
+                selectedFloater: action.data,
+            }
+        }
         default: {
             return state
         }
@@ -48,6 +54,7 @@ const initialState = {
     projectedTimeMs: 0,
     projectedIsPastGoal: false,
     numFloaters: 0,
+    selectedFloater: 0,
 }
 
 export default function FloaterView() {
@@ -71,8 +78,19 @@ export default function FloaterView() {
 
     }
     
+    const setFloater = (floaterNum) => {
+        dispatchFloatData({
+            type: "updateFloater",
+            data: floaterNum,
+        })
+    }
+
     const onDateSelect = () => {
         setDate(document.getElementById('floater-date').value)
+    }
+
+    const onFloaterSelect = event => {
+        setFloater(event.target.value)
     }
 
     // on mount, set date to today and render
@@ -132,15 +150,15 @@ export default function FloaterView() {
         <div style={{paddingBottom: 200}}>
             <Logout />
             <FloatHeader>Break Schedule</FloatHeader>
-            <input type="date" id="floater-date" onChange={() => onDateSelect()}/>
-            <select>
+            <input type="date" id="floater-date" onChange={onDateSelect}/>
+            <select onChange={onFloaterSelect}>
                 {
                     floatData && getFloaterOptions()
                 }
             </select>
             {
                 floatData && floatData.breaks.map((breakData, index) => (
-                    <Break key={index} {...breakData} onCheckChange={onBreakFinishChecked} />
+                    floatData.selectedFloater == breakData.floater && <Break key={index} {...breakData} onCheckChange={onBreakFinishChecked} />
                 ))
             }
             <FloaterStatsGrid>
