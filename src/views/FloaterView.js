@@ -47,6 +47,7 @@ const initialState = {
     goalTimeMs: 0,
     projectedTimeMs: 0,
     projectedIsPastGoal: false,
+    numFloaters: 0,
 }
 
 export default function FloaterView() {
@@ -117,15 +118,25 @@ export default function FloaterView() {
 
     }
 
+    const getFloaterOptions = () => {
+        let options = []
+        for (let i=1; i<=floatData.numFloaters; i++) {
+            options.push(
+                <option value={i}>Floater {i}</option>
+            )
+        }
+        return options
+    }
+
     return (
         <div style={{paddingBottom: 200}}>
             <Logout />
             <FloatHeader>Break Schedule</FloatHeader>
             <input type="date" id="floater-date" onChange={() => onDateSelect()}/>
             <select>
-                <option value="1">Floater 1</option>
-                <option value="2">Floater 2</option>
-                <option value="3">Floater 3</option>
+                {
+                    floatData && getFloaterOptions()
+                }
             </select>
             {
                 floatData && floatData.breaks.map((breakData, index) => (
