@@ -41,6 +41,7 @@ const CheckboxGraphic = styled.span`
         -ms-transform: rotate(45deg);
         transform: rotate(45deg);
     }
+    border-radius: 0.5rem;
 `
 
 const FakeCheckbox = ({onChange}) => {
