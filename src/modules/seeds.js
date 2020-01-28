@@ -3,7 +3,7 @@ const breakSchedules = {
         totalFifteens: 8,
         totalThirties: 4,
         totalBreakTime: 240,
-        goalTime: 900,
+        goalTime: 1200,
         numFloaters: 2,
         breaks: [
             {

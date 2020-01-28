@@ -2,7 +2,7 @@ import React, { useReducer, useEffect } from "react"
 import Break from "../components/Break"
 import Logout from "../components/Logout"
 import breakSchedules from "../modules/seeds"
-import FloaterStatsGrid, { FloatHeader, FloatStatHeader, BreaksList, StatCell, ProjectedTimeCell } from "../styles/FloaterViewStyles"
+import FloaterStatsGrid, { FloatHeader, FloatStatHeader, BreaksList, StatCell, ProjectedTimeCell, WarningCell } from "../styles/FloaterViewStyles"
 import moment from "moment"
 
 const floatReducer = (state, action) => {
@@ -54,7 +54,7 @@ const initialState = {
     projectedTimeMs: 0,
     projectedIsPastGoal: false,
     numFloaters: 0,
-    selectedFloater: 0,
+    selectedFloater: 1,
 }
 
 export default function FloaterView() {
@@ -99,6 +99,7 @@ export default function FloaterView() {
         // get just the date out of new Date().toJSON
         const today = new Date().toJSON().slice(0, 10)
         setDate(today)
+        setFloater(1)
 
     }, [])
 
@@ -162,6 +163,7 @@ export default function FloaterView() {
                 ))
             }
             <FloaterStatsGrid>
+                { floatData && floatData.projectedIsPastGoal && <WarningCell>Seek asistance from manager</WarningCell> }
                 <StatCell>
                     <FloatStatHeader>Breaks Left:</FloatStatHeader>
                     <BreaksList>

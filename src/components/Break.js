@@ -41,7 +41,7 @@ export default function Break({employee, breakNum, duration, startTime, endTime,
                 <FakeCheckbox onChange={e=>onStartChecked(e)}/>
             </CenteredCell>
             <CenteredCell>
-                <ElapsedTime>{elapsedTimeString}</ElapsedTime>
+                <ElapsedTime>{elapsedTime > 0 ? 0 + elapsedTimeString : "00:00"}</ElapsedTime>
             </CenteredCell>
             <CenteredCell>
                 <FakeCheckbox onChange={e=>onFinishChecked(e)}/>

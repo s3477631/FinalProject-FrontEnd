@@ -2,9 +2,9 @@ import styled from "styled-components"
 import BorderedDiv from "./BorderedDiv"
 
 export const FloaterStatsGrid = styled.div`
-    border-style: solid;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto 1fr;
     position: fixed;
     bottom: 0;
     background-color: white;
@@ -32,9 +32,25 @@ export const BreaksList = styled.ul`
 export const StatCell = styled(BorderedDiv)`
     padding: 0.5rem;
     text-align: center;
+    border-width: 5px;
 `
 
 export const ProjectedTimeCell = styled(StatCell)`
     background-color: ${({projectedIsPastGoal}) => projectedIsPastGoal ? "red" : "green"};
+    border-top: ${({projectedIsPastGoal}) => projectedIsPastGoal && "none"};
 `
+
+export const WarningCell = styled.div`
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    border-style: solid;
+    border-width: 5px;
+    border-bottom: none;
+    background-color: red;
+    text-align: center;
+    padding: 0.5rem;
+`
+
 export default FloaterStatsGrid
