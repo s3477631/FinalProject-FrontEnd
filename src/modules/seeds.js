@@ -1,5 +1,5 @@
 const breakSchedules = {
-    "28/01/2020": {
+    "29/01/2020": {
         totalFifteens: 8,
         totalThirties: 4,
         totalBreakTime: 240,
@@ -104,7 +104,7 @@ const breakSchedules = {
             },
         ], 
     },
-    "29/01/2020": {
+    "30/01/2020": {
         totalFifteens: 8,
         totalThirties: 4,
         totalBreakTime: 240,

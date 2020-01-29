@@ -4,11 +4,13 @@ import prettyMs from "pretty-ms"
 import BreakGrid, { BreakHeader, ScheduledTime, CenteredCell, ElapsedTime } from "../styles/BreakStyles"
 import FakeCheckbox from "./FakeCheckbox"
 
-export default function Break({employee, breakNum, duration, startTime, endTime, onCheckChange}) {
+// the initial state needs to pull from the parent
+export default function Break({employee, breakNum, duration, startTime, endTime, onCheckChange,
+    initialElapsed, initialStarted, initialFinished}) {
 
-    const [ elapsedTime, setElapsedTime ] = useState(0)
-    const [ started, setStarted ] = useState(null)
-    const [ finished, setFinished ] = useState(null)
+    const [ elapsedTime, setElapsedTime ] = useState(initialElapsed)
+    const [ started, setStarted ] = useState(employee.startTime ||initialStarted)
+    const [ finished, setFinished ] = useState(initialFinished)
 
     const breakTitle = `${employee}'s ${ordinal(breakNum || 1)} ${duration}`
     const scheduledTime = `${startTime}-${endTime}`

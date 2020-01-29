@@ -4,45 +4,7 @@ import Logout from "../components/Logout"
 import breakSchedules from "../modules/seeds"
 import FloaterStatsGrid, { FloatHeader, FloatStatHeader, BreaksList, StatCell, ProjectedTimeCell, WarningCell } from "../styles/FloaterViewStyles"
 import moment from "moment"
-
-const floatReducer = (state, action) => {
-    switch (action.type) {
-        case "setSchedule": {
-            console.log("setSchedule")
-            const newSchedule = action.data
-            const goalTimeMs = new Date().setHours(0,0,0,0) + newSchedule.goalTime * 60000
-            const projectedTimeMs = Date.now() + newSchedule.totalBreakTime * 60000
-            return {
-                ...newSchedule,
-                goalTimeMs,
-                projectedTimeMs,
-                projectedIsPastGoal: projectedTimeMs > goalTimeMs,
-            }
-        }
-        case "updateBreaks": {
-            const { totalFifteens, totalThirties, totalBreakTime } = action.data
-            const projectedTimeMs = Date.now() + totalBreakTime * 60000
-            console.log(state.projectedTimeMs, projectedTimeMs)
-            return {
-                ...state,
-                totalFifteens, 
-                totalThirties,
-                totalBreakTime,
-                projectedTimeMs,
-                projectedIsPastGoal: projectedTimeMs > state.goalTimeMs,
-            }
-        }
-        case "updateFloater": {
-            return {
-                ...state,
-                selectedFloater: action.data,
-            }
-        }
-        default: {
-            return state
-        }
-    }
-}
+import floatReducer from "../modules/floatReducer"
 
 const initialState = {
     totalFifteens: 0,
@@ -73,7 +35,7 @@ export default function FloaterView() {
         const newSchedule = breakSchedules[formattedDate]
         dispatchFloatData({
             type: "setSchedule",
-            data: newSchedule,
+            data: newSchedule || initialState,
         })
 
     }
@@ -102,6 +64,15 @@ export default function FloaterView() {
         setFloater(1)
 
     }, [])
+
+    useEffect(()=>{
+        // update projected every minute (seconds for testing)
+        setTimeout(()=>{
+            dispatchFloatData({
+                type: "updateProjected",
+            })
+        }, 60000)
+    }, [floatData.projectedTimeMs])
 
     const onBreakFinishChecked = (breakDuration, isChecked) => {
         
@@ -141,7 +112,7 @@ export default function FloaterView() {
         let options = []
         for (let i=1; i<=floatData.numFloaters; i++) {
             options.push(
-                <option value={i}>Floater {i}</option>
+                <option key={i} value={i} selected={floatData.selectedFloater==i}>Floater {i}</option>
             )
         }
         return options
@@ -159,7 +130,8 @@ export default function FloaterView() {
             </select>
             {
                 floatData && floatData.breaks.map((breakData, index) => (
-                    floatData.selectedFloater == breakData.floater && <Break key={index} {...breakData} onCheckChange={onBreakFinishChecked} />
+                    floatData.selectedFloater == breakData.floater 
+                        && <Break key={index} {...breakData} onCheckChange={onBreakFinishChecked} />
                 ))
             }
             <FloaterStatsGrid>
