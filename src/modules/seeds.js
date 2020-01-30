@@ -1,10 +1,14 @@
 const breakSchedules = {
-    "29/01/2020": {
+    "30/01/2020": {
         totalFifteens: 8,
         totalThirties: 4,
         totalBreakTime: 240,
         goalTime: 1200,
         numFloaters: 2,
+        stats: {
+            finalFinishTime: "3:45 PM",
+            managerWasCalled: true
+        },
         breaks: [
             {
                 employee: "CoWorker 1", 
@@ -104,7 +108,7 @@ const breakSchedules = {
             },
         ], 
     },
-    "30/01/2020": {
+    "31/01/2020": {
         totalFifteens: 8,
         totalThirties: 4,
         totalBreakTime: 240,
