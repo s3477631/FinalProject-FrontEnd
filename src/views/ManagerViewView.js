@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import ManagerNav from "../components/ManagerNav"
 // import axios from "axios"
 
@@ -9,37 +9,39 @@ export default function ManagerViewView() {
 
     const [ schedule, setSchedule ] = useState(null)
 
-    function getData() { // change this to work with date onChange
+    const setDate = (date) => {
         
-        // retrive date in date picker 
-        let date = document.getElementById('date-select').value
+        // update value of date picker
+        document.getElementById('date-select').value = date
+
         // convert from YYYY-MM-DD to DD/MM/YYYY
-            .split("-")
-            .reverse()
-            .join("/")
+        const formattedDate = date.split("-").reverse().join("/")
 
-        // actual code when data comes back in correct format
+        // update state
+        setSchedule(breakSchedules[formattedDate] && breakSchedules[formattedDate].breaks)
 
-        // axios({
-        //     method: 'post',
-        //     url: "https://boiling-inlet-28252.herokuapp.com/today",
-        //     data: { date }
-        // })
-        // .then(response => {
-        //     setSchedule(Object.values(response.data[0]))
-        // }).catch(error => {
-        //     setSchedule("There's nothing here!")
-        // })
-
-        // temp code to fill table
-        console.log(breakSchedules[date])
-        setSchedule(breakSchedules[date])
+        console.log("date was set")
     }
+
+    const onDateSelect = () => {
+        setDate(document.getElementById('date-select').value)
+    }
+    
+    // on mount, set date to today and render
+    useEffect(()=>{
+
+        // get just the date out of new Date().toJSON
+        const today = new Date().toJSON().slice(0, 10)
+        setDate(today)
+
+    }, [])
 
     return (
         <>
-            <ManagerNav renderDateSelect />
-            <button onClick={()=>getData()}>Click me</button>
+            <ManagerNav renderDateSelect onChange={onDateSelect}/>
+            {
+                !schedule && <p style={{color: "red"}}>A break schedule has not been generated for this day.</p>
+            }
             <table>
                 <thead>
                     <tr>
