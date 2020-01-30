@@ -48,7 +48,7 @@ const floatReducer = (state, action) => {
         case "updateFloater": {
             return {
                 ...state,
-                selectedFloater: action.data,
+                selectedFloater: Number(action.data),
             }
         }
 
@@ -62,14 +62,6 @@ const floatReducer = (state, action) => {
                 ...state,
             }
             // do i need to keep state in break and pass it up? 
-        }
-
-        case "setBreakFinished": {
-
-        }
-
-        case "setBreakElapsedTime": {
-
         }
 
         case "updateProjected": {

@@ -112,7 +112,7 @@ export default function FloaterView() {
         let options = []
         for (let i=1; i<=floatData.numFloaters; i++) {
             options.push(
-                <option key={i} value={i} selected={floatData.selectedFloater==i}>Floater {i}</option>
+                <option key={i} value={i}>Floater {i}</option>
             )
         }
         return options
@@ -123,14 +123,14 @@ export default function FloaterView() {
             <Logout />
             <FloatHeader>Break Schedule</FloatHeader>
             <input type="date" id="floater-date" onChange={onDateSelect}/>
-            <select onChange={onFloaterSelect}>
+            <select onChange={onFloaterSelect} value={floatData.selectedFloater}>
                 {
                     floatData && getFloaterOptions()
                 }
             </select>
             {
                 floatData && floatData.breaks.map((breakData, index) => (
-                    floatData.selectedFloater == breakData.floater 
+                    floatData.selectedFloater === breakData.floater 
                         && <Break key={index} {...breakData} onCheckChange={onBreakFinishChecked} />
                 ))
             }

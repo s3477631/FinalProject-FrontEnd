@@ -7,8 +7,10 @@ export default function ManagerStatsView(props) {
             <ManagerNav renderDateSelect />
             <table>
                 <thead>
-                    <th>Statistic</th>
-                    <th>Value</th>
+                    <tr>
+                        <th>Statistic</th>
+                        <th>Value</th>
+                    </tr>
                 </thead>
                 <tbody>
                     <tr>

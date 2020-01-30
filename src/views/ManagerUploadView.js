@@ -6,25 +6,37 @@ export default function ManagerUploadView() {
 
     const [ file, setFile ] = useState(null)
     const [ loading, setLoading ] = useState(null)
+    const [ error, setError ] = useState(null)
 
     const onFileAdded = (event) => {
 
-        // validate .csv format
+        // reset state
         setLoading(true)
+        setError(false)
+        setFile(null)
 
         // get autofill data from server
         const data = new FormData()
         const newFile = event.target.files[0]
-        data.append('csvFile', newFile)
-        axios.post("https://boiling-inlet-28252.herokuapp.com/csvupload", data)
-        .then(response => {
-            // update 
-            console.log(response)
-            setFile(response)
+
+        // validate
+        const isCsv = newFile.name.includes(".csv")
+        if (isCsv) {
+            data.append('csvFile', newFile)
+            axios.post("https://boiling-inlet-28252.herokuapp.com/upload/csvajsdhas", data)
+            .then(response => {
+                setFile(response)
+                setLoading(false)
+            }).catch(error => {
+                setLoading(false)
+                setError("" + error)
+            })
+        } else {
             setLoading(false)
-        }).catch(error => {
-            console.log(error)
-        })
+            setError("Invalid format. Please upload a .csv file.")
+            setFile(null)
+        }
+        
     }
 
     return (
@@ -35,6 +47,7 @@ export default function ManagerUploadView() {
                     <input type="file" onChange={event=>onFileAdded(event)}/>
                 </div>
                 { loading && <p>Loading...</p> }
+                { error && <p style={{color: "red"}}>An error occured during upload:<br/>{error}</p> }
                 {
                     file && <>
                         <div>
