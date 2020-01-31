@@ -13,6 +13,6 @@ export default function Logout() {
         localStorage.removeItem("token")
     }
     return (
-        <Link onClick={event => onClick(event)}>Logout</Link>
+        <Link to="" onClick={event => onClick(event)}>Logout</Link>
     )
 }

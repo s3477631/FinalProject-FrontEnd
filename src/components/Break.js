@@ -4,23 +4,35 @@ import prettyMs from "pretty-ms"
 import BreakGrid, { BreakHeader, ScheduledTime, CenteredCell, ElapsedTime } from "../styles/BreakStyles"
 import FakeCheckbox from "./FakeCheckbox"
 
-export default function Break({employee, breakNum, duration, startTime, endTime, onCheckChange}) {
+// the initial state needs to pull from the parent
+export default function Break({employee, breakNum, duration, startTime, endTime, onCheckChange,
+    initialElapsed, initialStarted, initialFinished}) {
 
-    const [ elapsedTime, setElapsedTime ] = useState(0)
-    const [ started, setStarted ] = useState(null)
-    const [ finished, setFinished ] = useState(null)
+    const [ elapsedTime, setElapsedTime ] = useState(initialElapsed) // axios
+    const [ started, setStarted ] = useState(initialStarted) // axios
+    const [ finished, setFinished ] = useState(initialFinished) // axios
 
     const breakTitle = `${employee}'s ${ordinal(breakNum || 1)} ${duration}`
     const scheduledTime = `${startTime}-${endTime}`
     const elapsedTimeString = prettyMs(elapsedTime, {colonNotation: true, secondsDecimalDigits: 0})
 
     const onStartChecked = event => {
+
+        // post, store start time
+
+
+
         const checked = event.target.checked
         checked ? setStarted(Date.now()) : setStarted(checked)
+
     }
 
     const onFinishChecked = event => {
-        //debugger
+
+        // post, store finish time and time elapsed
+
+
+
         const checked = event.target.checked
         setFinished(checked)
         onCheckChange(duration, checked)
@@ -38,13 +50,13 @@ export default function Break({employee, breakNum, duration, startTime, endTime,
             <ScheduledTime><h3>{scheduledTime}</h3></ScheduledTime>
             <CenteredCell>
                 {/* <input type="checkbox" onChange={e=>onStartChecked(e)}/> */}
-                <FakeCheckbox onChange={e=>onStartChecked(e)}/>
+                <FakeCheckbox onChange={onStartChecked}/>
             </CenteredCell>
             <CenteredCell>
                 <ElapsedTime>{elapsedTime > 0 ? 0 + elapsedTimeString : "00:00"}</ElapsedTime>
             </CenteredCell>
             <CenteredCell>
-                <FakeCheckbox onChange={e=>onFinishChecked(e)}/>
+                <FakeCheckbox onChange={onFinishChecked}/>
             </CenteredCell>
             <CenteredCell>
                 <p>Started</p>

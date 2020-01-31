@@ -42,10 +42,12 @@ export default function ManagerViewView() {
             <button onClick={()=>getData()}>Click me</button>
             <table>
                 <thead>
-                    <th>Employee</th>
-                    <th>Scheduled Time</th>
-                    <th>Duration</th>
-                    <th>Floater</th>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Scheduled Time</th>
+                        <th>Duration</th>
+                        <th>Floater</th>
+                    </tr>
                 </thead>
                 <tbody>
                     {

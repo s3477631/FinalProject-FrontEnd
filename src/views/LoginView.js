@@ -1,5 +1,6 @@
 import React from "react"
 import { useGlobalState } from "../modules/store"
+import axios from "axios"
 
 export default function LoginView() {
 
@@ -9,26 +10,36 @@ export default function LoginView() {
         event.preventDefault()
         const elements = event.target.elements
         const username = elements[0].value
-        // const password = elements[1] //should check for match
-
+        const password = elements[1].value
+        console.log(username)
         // retrieve token
-        const token = "random"
         const user = {name: username}
-        // update state
-        // dispatch({
-        //     type: "setToken",
-        //     data: token
+        const token = "lakjdf"
+        // const token = axios.post("https://boiling-inlet-28252.herokuapp.com/auth/login", {email: username+"@mail.com", password})
+        // .then(response => {
+        //     console.log(response)
+        //     return response.json()
         // })
-        // dispatch({
-        //     type: "setUser",
-        //     data: user,
+        // .then(({token}) => {
+        //     console.log(token)
+        //     dispatch({
+        //         type: "setSession",
+        //         data: {user, token}
+        //     })
+        //     localStorage.setItem("user", JSON.stringify(user))
+        //     localStorage.setItem("token", token)
         // })
+        // .catch(error => {
+        //     console.log(error)
+        // })
+        
         dispatch({
             type: "setSession",
             data: {user, token}
         })
         localStorage.setItem("user", JSON.stringify(user))
         localStorage.setItem("token", token)
+        
     }
 
     return (
