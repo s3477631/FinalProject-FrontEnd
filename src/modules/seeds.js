@@ -1,10 +1,14 @@
 const breakSchedules = {
-    "29/01/2020": {
+    "30/01/2020": {
         totalFifteens: 8,
         totalThirties: 4,
         totalBreakTime: 240,
         goalTime: 1200,
         numFloaters: 2,
+        stats: {
+            finalFinishTime: "3:45 PM",
+            managerWasCalled: true
+        },
         breaks: [
             {
                 employee: "CoWorker 1", 
@@ -104,7 +108,7 @@ const breakSchedules = {
             },
         ], 
     },
-    "30/01/2020": {
+    "31/01/2020": {
         totalFifteens: 8,
         totalThirties: 4,
         totalBreakTime: 240,
@@ -207,6 +211,119 @@ const breakSchedules = {
                 floater: 2,
                 breakNum: 2,
             },
+        ], 
+    },
+    "01/02/2020": {
+        totalFifteens: 18,
+        totalThirties: 11,
+        totalBreakTime: 600,
+        goalTime: 60 * 16,
+        numFloaters: 2,
+        breaks: [
+            {
+                employee: "Ash", 
+                startTime: "1:30",
+                endTime: "2:00",
+                duration: 30,
+                floater: 2,
+                breakNum: 1,
+            },
+            {
+                employee: "Yaz", 
+                startTime: "1:30",
+                endTime: "2:00",
+                duration: 30,
+                floater: 1,
+                breakNum: 1,
+            },
+            {
+                employee: "Lill", 
+                startTime: "2:00",
+                endTime: "2:30",
+                duration: 30,
+                floater: 2,
+                breakNum: 1,
+            },
+            {
+                employee: "Sam", 
+                startTime: "2:00",
+                endTime: "2:30",
+                duration: 15,
+                floater: 1,
+                breakNum: 1,
+            },
+            {
+                employee: "Kyle", 
+                startTime: "2:00",
+                endTime: "2:15",
+                duration: 15,
+                floater: 2,
+                breakNum: 2,
+            },
+            {
+                employee: "Paris", 
+                startTime: "2:15",
+                endTime: "2:30",
+                duration: 15,
+                floater: 2,
+                breakNum: 2,
+            },{
+                employee: "Tracy", 
+                startTime: "2:30",
+                endTime: "2:45",
+                duration: 15,
+                floater: 1,
+                breakNum: 2,
+            },{
+                employee: "Sonya", 
+                startTime: "2:30",
+                endTime: "2:45",
+                duration: 15,
+                floater: 2,
+                breakNum: 2,
+            },{
+                employee: "Zach", 
+                startTime: "2:45",
+                endTime: "3:00",
+                duration: 15,
+                floater: 1,
+                breakNum: 2,
+            },{
+                employee: "Yaz", 
+                startTime: "2:45",
+                endTime: "3:00",
+                duration: 15,
+                floater: 2,
+                breakNum: 2,
+            },{
+                employee: "Mahdi", 
+                startTime: "3:15",
+                endTime: "3:30",
+                duration: 15,
+                floater: 1,
+                breakNum: 2,
+            },{
+                employee: "Sam", 
+                startTime: "3:15",
+                endTime: "3:30",
+                duration: 15,
+                floater: 2,
+                breakNum: 2,
+            },{
+                employee: "Lill", 
+                startTime: "3:30",
+                endTime: "3:45",
+                duration: 15,
+                floater: 1,
+                breakNum: 2,
+            },{
+                employee: "Kyle", 
+                startTime: "3:30",
+                endTime: "3:45",
+                duration: 15,
+                floater: 2,
+                breakNum: 2,
+            }
         ], 
     },
 }
