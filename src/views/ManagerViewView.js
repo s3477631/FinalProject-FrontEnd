@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import ManagerNav from "../components/ManagerNav"
 // import axios from "axios"
+import today from "../modules/dateHelper"
 
 // seeds
 import breakSchedules from "../modules/seeds"
@@ -26,19 +27,10 @@ export default function ManagerViewView() {
     const onDateSelect = () => {
         setDate(document.getElementById('date-select').value)
     }
-    
-    // on mount, set date to today and render
-    useEffect(()=>{
-
-        // get just the date out of new Date().toJSON
-        const today = new Date().toJSON().slice(0, 10)
-        setDate(today)
-
-    }, [])
 
     return (
         <>
-            <ManagerNav renderDateSelect onChange={onDateSelect}/>
+            <ManagerNav renderDateSelect onChange={onDateSelect} defaultValue={today}/>
             {
                 !schedule && <p style={{color: "red"}}>A break schedule has not been generated for this day.</p>
             }

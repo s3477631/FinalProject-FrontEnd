@@ -5,6 +5,7 @@ import breakSchedules from "../modules/seeds"
 import FloaterStatsGrid, { FloatHeader, FloatStatHeader, BreaksList, StatCell, ProjectedTimeCell, WarningCell } from "../styles/FloaterViewStyles"
 import moment from "moment"
 import floatReducer from "../modules/floatReducer"
+import today from "../modules/dateHelper"
 
 const initialState = {
     totalFifteens: 0,
@@ -54,16 +55,6 @@ export default function FloaterView() {
     const onFloaterSelect = event => {
         setFloater(event.target.value)
     }
-
-    // on mount, set date to today and render
-    useEffect(()=>{
-
-        // get just the date out of new Date().toJSON
-        const today = new Date().toJSON().slice(0, 10)
-        setDate(today)
-        setFloater(1)
-
-    }, [])
 
     useEffect(()=>{
         // update projected every minute
@@ -122,8 +113,8 @@ export default function FloaterView() {
         <div style={{paddingBottom: 200}}>
             <Logout />
             <FloatHeader>Break Schedule</FloatHeader>
-            <input type="date" id="floater-date" onChange={onDateSelect}/>
-            <select onChange={onFloaterSelect} value={floatData.selectedFloater}>
+            <input type="date" id="floater-date" onChange={onDateSelect} defaultValue={today}/>
+            <select onChange={onFloaterSelect} value={floatData.selectedFloater} defaultValue={1}>
                 {
                     floatData && getFloaterOptions()
                 }

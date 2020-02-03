@@ -1,10 +1,9 @@
 import React from "react"
 import ManagerNav from "../components/ManagerNav"
 import breakSchedules from "../modules/seeds"
+import { yesterday } from "../modules/dateHelper"
 
 export default function ManagerStatsView(props) {
-
-    const yesterday = new Date(Date.now() - 864e5).toJSON().slice(0,10)
     
     return (
         <>
