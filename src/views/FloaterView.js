@@ -66,7 +66,7 @@ export default function FloaterView() {
     }, [])
 
     useEffect(()=>{
-        // update projected every minute (seconds for testing)
+        // update projected every minute
         setTimeout(()=>{
             dispatchFloatData({
                 type: "updateProjected",

@@ -2,7 +2,7 @@ import React from "react"
 import { useGlobalState } from "../modules/store"
 import { Link } from "react-router-dom"
 
-export default function Logout() {
+export default function Logout({style}) {
     const { dispatch } = useGlobalState()
     const onClick = () => {
         dispatch({
@@ -13,6 +13,6 @@ export default function Logout() {
         localStorage.removeItem("token")
     }
     return (
-        <Link to="" onClick={event => onClick(event)}>Logout</Link>
+        <Link to="" onClick={event => onClick(event)} style={style} >Logout</Link>
     )
 }
