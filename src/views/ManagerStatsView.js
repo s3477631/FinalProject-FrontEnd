@@ -7,8 +7,8 @@ export default function ManagerStatsView(props) {
     
     return (
         <>
-            <ManagerNav renderDateSelect defaultValue={yesterday}/>
-            <table>
+            <ManagerNav renderDateSelect defaultValue={yesterday} />
+            <table align="center">
                 <thead>
                     <tr>
                         <th>Statistic</th>

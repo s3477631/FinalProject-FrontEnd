@@ -1,6 +1,6 @@
 import React from "react"
 import { useGlobalState } from "../modules/store"
-import axios from "axios"
+//import axios from "axios"
 
 export default function LoginView() {
 
@@ -10,7 +10,7 @@ export default function LoginView() {
         event.preventDefault()
         const elements = event.target.elements
         const username = elements[0].value
-        const password = elements[1].value
+        //const password = elements[1].value
         console.log(username)
         // retrieve token
         const user = {name: username}

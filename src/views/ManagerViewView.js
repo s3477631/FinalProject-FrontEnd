@@ -1,61 +1,68 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react" 
 import ManagerNav from "../components/ManagerNav"
 // import axios from "axios"
-import today from "../modules/dateHelper"
+import today, {yesterday} from "../modules/dateHelper"
+import BorderedTable, { BorderedTh, BorderedTd } from "../styles/TableStyles"
 
 // seeds
 import breakSchedules from "../modules/seeds"
+import { useEffect } from "react"
 
 export default function ManagerViewView() {
 
-    const [ schedule, setSchedule ] = useState(null)
+    // const [ schedule, setSchedule ] = useState(null)
 
-    const setDate = (date) => {
+    const setDate = (event) => {
         
-        // update value of date picker
-        document.getElementById('date-select').value = date
+        // // update value of date picker
+        // const date = document.getElementById('date-select').value
 
-        // convert from YYYY-MM-DD to DD/MM/YYYY
-        const formattedDate = date.split("-").reverse().join("/")
+        // // convert from YYYY-MM-DD to DD/MM/YYYY
+        // const formattedDate = date.split("-").reverse().join("/")
 
-        // update state
-        setSchedule(breakSchedules[formattedDate] && breakSchedules[formattedDate].breaks)
+        // // update state
 
-        console.log("date was set")
+        // setSchedule(breakSchedules[formattedDate]?.breaks)
+
+        // console.log("setdate")
     }
 
-    const onDateSelect = () => {
-        setDate(document.getElementById('date-select').value)
-    }
+    let date = null
+    let schedule = null
+    
+    useEffect(()=>{
+        date = document.getElementById('date-select')
+        schedule = breakSchedules[date.value]?.breaks
+    }, [])
 
     return (
         <>
-            <ManagerNav renderDateSelect onChange={onDateSelect} defaultValue={today}/>
+            <ManagerNav renderDateSelect onChange={setDate} defaultValue={today}/>
             {
                 !schedule && <p style={{color: "red"}}>A break schedule has not been generated for this day.</p>
             }
-            <table>
+            <BorderedTable>
                 <thead>
                     <tr>
-                        <th>Employee</th>
-                        <th>Scheduled Time</th>
-                        <th>Duration</th>
-                        <th>Floater</th>
+                        <BorderedTh>Employee</BorderedTh>
+                        <BorderedTh>Scheduled Time</BorderedTh>
+                        <BorderedTh>Duration</BorderedTh>
+                        <BorderedTh>Floater</BorderedTh>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        schedule && schedule.map((breakData) => (
-                            <tr>
-                                <td>{breakData.employee}</td>
-                                <td>{`${breakData.startTime}-${breakData.endTime}`}</td>
-                                <td>{breakData.duration}</td>
-                                <td>{breakData.floater}</td>
+                        schedule && schedule.map((breakData, i) => (
+                            <tr key={i}>
+                                <BorderedTd>{breakData.employee}</BorderedTd>
+                                <BorderedTd>{`${breakData.startTime}-${breakData.endTime}`}</BorderedTd>
+                                <BorderedTd>{breakData.duration}</BorderedTd>
+                                <BorderedTd>{breakData.floater}</BorderedTd>
                             </tr>
                         ))
                     }
                 </tbody>
-            </table>
+            </BorderedTable>
         </>
     )
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import ManagerNav from "../components/ManagerNav"
 import axios from "axios"
-import { Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom"
 
 export default function ManagerUploadView() {
 
@@ -49,13 +49,13 @@ export default function ManagerUploadView() {
         // check all fields are filled
         // error if not
         // axios post final form with settings
-        const formElements = event.target.elements
-        const data = {
-            file: formElements[0].files[0],
-            date: formElements[1].value,
-            goalTime: formElements[2].value,
-            numFloaters: formElements[3].value
-        }
+        // const formElements = event.target.elements
+        // const data = {
+        //     file: formElements[0].files[0],
+        //     date: formElements[1].value,
+        //     goalTime: formElements[2].value,
+        //     numFloaters: formElements[3].value
+        // }
 
         // indicate upload has started
         setLoading("Uploading...")
@@ -79,28 +79,27 @@ export default function ManagerUploadView() {
             <ManagerNav />
             { loading }
             { error && <p style={{color: "red"}}>An error occured during upload:<br/>{error}</p> }
-            <form onSubmit={onSubmit}>
-                <div>
-                    <input type="file" onChange={onFileAdded} required />
+                <div style={{display: "flex", justifyContent: "center"}}>
+                    <form onSubmit={onSubmit} style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+                        <label>Select roster </label>
+                        <input type="file" onChange={onFileAdded} required style={{width: "100%"}}/>
+                        <br />
+                        {
+                            autofill && <>
+                                <label>Select date </label>
+                                <input type="date" defaultValue={autofill.date} required />
+                                <br /> 
+                                <label>Select goal time </label>
+                                <input type="time" required />
+                                <br />
+                                <label>Select number of floaters </label>
+                                <input type="number" defaultValue={autofill.numFloaters} required />
+                                <br />
+                                <button style={{height: "40px"}}>Generate Break Schedule</button>
+                            </>
+                        }
+                    </form>
                 </div>
-                {
-                    autofill && <>
-                        <div>
-                            <label>Select date </label>
-                            <input type="date" defaultValue={autofill.date} required />
-                        </div>
-                        <div>
-                            <label>Select goal time </label>
-                            <input type="time" required />
-                        </div>
-                        <div>
-                            <label>Select number of floaters </label>
-                            <input type="number" defaultValue={autofill.numFloaters} required />
-                        </div>
-                        <button>Generate Break Schedule</button>
-                    </>
-                }
-            </form>
             { success && <Redirect to="/view" /> }
         </>
     )
