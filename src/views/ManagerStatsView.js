@@ -3,9 +3,12 @@ import ManagerNav from "../components/ManagerNav"
 import breakSchedules from "../modules/seeds"
 
 export default function ManagerStatsView(props) {
+
+    const yesterday = new Date(Date.now() - 864e5).toJSON().slice(0,10)
+    
     return (
         <>
-            <ManagerNav renderDateSelect defaultValue={"2020-01-30"}/>
+            <ManagerNav renderDateSelect defaultValue={yesterday}/>
             <table>
                 <thead>
                     <tr>
