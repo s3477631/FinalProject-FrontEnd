@@ -9,8 +9,8 @@ export default function ManagerNav(props) {
             <Link data-cy="navuploadbutton" to="/upload"><button>UPLOAD</button></Link>
             <Link data-cy="navstatsbutton" to="/stats"><button>STATS</button></Link>
             <Link data-cy="navviewbutton" to="/view"><button>VIEW</button></Link>
-            {props.renderDateSelect ? <input type="date" id="date-select"/> : null}
-            <Logout data-cy="loggoutbutton" />
+            {props.renderDateSelect ? <input data-cy="floatdatepicker" type="date" id="date-select"/> : null}
+            <Logout />
             <h1>Break Scheduler</h1>
         </>
     )
