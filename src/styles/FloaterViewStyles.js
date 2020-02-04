@@ -14,6 +14,7 @@ export const FloaterStatsGrid = styled.div`
 
 export const FloatHeader = styled.h1`
     text-align: center;
+    font-size: 1.5rem;
 `
 
 export const FloatStatHeader = styled.h4`

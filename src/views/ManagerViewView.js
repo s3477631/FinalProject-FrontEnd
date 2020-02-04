@@ -1,8 +1,9 @@
 import React, { useState } from "react" 
 import ManagerNav from "../components/ManagerNav"
 // import axios from "axios"
-import today, {yesterday} from "../modules/dateHelper"
+import today, { yesterday } from "../modules/dateHelper"
 import BorderedTable, { BorderedTh, BorderedTd } from "../styles/TableStyles"
+import { interval } from "rxjs"
 
 // seeds
 import breakSchedules from "../modules/seeds"
@@ -12,23 +13,15 @@ export default function ManagerViewView() {
 
     // const [ schedule, setSchedule ] = useState(null)
 
-    const setDate = (event) => {
-        
-        // // update value of date picker
-        // const date = document.getElementById('date-select').value
-
-        // // convert from YYYY-MM-DD to DD/MM/YYYY
-        // const formattedDate = date.split("-").reverse().join("/")
-
-        // // update state
-
-        // setSchedule(breakSchedules[formattedDate]?.breaks)
-
-        // console.log("setdate")
-    }
-
     let date = null
     let schedule = null
+    const observable = interval(1000);
+    const subscription = observable.subscribe(setDate)
+    console.log(subscription)
+
+    function getSchedule() {
+        return schedule
+    }
     
     useEffect(()=>{
         date = document.getElementById('date-select')

@@ -111,14 +111,18 @@ export default function FloaterView() {
 
     return (
         <div style={{paddingBottom: 200}}>
-            <Logout />
-            <FloatHeader>Break Schedule</FloatHeader>
-            <input type="date" id="floater-date" onChange={onDateSelect} defaultValue={today}/>
-            <select onChange={onFloaterSelect} value={floatData.selectedFloater} defaultValue={1}>
-                {
-                    floatData && getFloaterOptions()
-                }
-            </select>
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <FloatHeader>Break Schedule</FloatHeader>  
+                <input type="date" id="floater-date" onChange={onDateSelect} defaultValue={today} style={{fontSize: "18px", fontFamily: "roboto", width: "150px", marginLeft: "1rem"}}/>
+            </div>
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "0.5rem"}}>
+                <select onChange={onFloaterSelect} value={floatData.selectedFloater} defaultValue={1}>
+                    {
+                        floatData && getFloaterOptions()
+                    }
+                </select>
+                <Logout style={{marginLeft: "auto"}}/>
+            </div>
             {
                 floatData && floatData.breaks.map((breakData, index) => (
                     floatData.selectedFloater === breakData.floater 

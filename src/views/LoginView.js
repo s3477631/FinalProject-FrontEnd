@@ -1,37 +1,45 @@
 import React from "react"
 import { useGlobalState } from "../modules/store"
-//import axios from "axios"
+// import axios from "axios"
+import styled from "styled-components"
+
+const CenterScreen = styled.div`
+    text-align: center;
+    height: 70vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+`
 
 export default function LoginView() {
 
     const { dispatch } = useGlobalState()
 
-    const onSubmit = (event) => {
+    const onSubmit = async (event) => {
         event.preventDefault()
         const elements = event.target.elements
         const username = elements[0].value
-        //const password = elements[1].value
+        const password = elements[1].value
+
         console.log(username)
         // retrieve token
         const user = {name: username}
         const token = "lakjdf"
-        // const token = axios.post("https://boiling-inlet-28252.herokuapp.com/auth/login", {email: username+"@mail.com", password})
-        // .then(response => {
-        //     console.log(response)
-        //     return response.json()
+        // const token = await axios.post("https://boiling-inlet-28252.herokuapp.com/auth/login", {email: username+"@mail.com", password})
+        // console.log(token)
+        // // .then(response => {
+        // //     console.log(response)
+        // //     return response
+        // // })
+        // dispatch({
+        //     type: "setSession",
+        //     data: {user, token}
         // })
-        // .then(({token}) => {
-        //     console.log(token)
-        //     dispatch({
-        //         type: "setSession",
-        //         data: {user, token}
-        //     })
-        //     localStorage.setItem("user", JSON.stringify(user))
-        //     localStorage.setItem("token", token)
-        // })
-        // .catch(error => {
-        //     console.log(error)
-        // })
+        // localStorage.setItem("user", JSON.stringify(user))
+        // localStorage.setItem("token", token)
+        
         
         dispatch({
             type: "setSession",
@@ -43,19 +51,19 @@ export default function LoginView() {
     }
 
     return (
-        <>
-        <h1>Break Scheduler</h1>
-        <form onSubmit={(event) => onSubmit(event)}>
-            <div>
-                <label>Username:</label>
-                <input name="username" />
-            </div>
-            <div>
-                <label>Password:</label>
-                <input name="password" type="password" />
-            </div>
-            <button>Submit</button>
-        </form>
-        </>
+        <CenterScreen>
+            <h1>Break Scheduler</h1>
+            <form onSubmit={(event) => onSubmit(event)}>
+                <div>
+                    <label>Username: </label>
+                    <input name="username" />
+                </div>
+                <div style={{marginTop: "0.5rem", width: "100%"}}>
+                    <label>Password: </label>
+                    <input name="password" type="password" />
+                </div>
+                <button style={{marginTop: "1rem", width: "100%", height: "40px"}}>Login</button>
+            </form>
+        </CenterScreen>
     )
 }
