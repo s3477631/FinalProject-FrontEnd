@@ -37,13 +37,13 @@ export default function LoginView() {
         <form onSubmit={(event) => onSubmit(event)}>
             <div>
                 <label>Username:</label>
-                <input name="username" />
+                <input name="username" data-cy="username" />
             </div>
             <div>
                 <label>Password:</label>
-                <input name="password" type="password" />
+                <input name="password" data-cy="password" type="password" />
             </div>
-            <button>Submit</button>
+            <button data-cy="loginButton">Submit</button>
         </form>
         </>
     )
