@@ -16,7 +16,7 @@ export default function ManagerUploadView() {
         const data = new FormData()
         const newFile = event.target.files[0]
         data.append('csvFile', newFile)
-        axios.post("https://boiling-inlet-28252.herokuapp.com/csvupload", data)
+        axios.post("https://boiling-inlet-28252.herokuapp.com/upload/csv", data)
         .then(response => {
             // update 
             console.log(response)
