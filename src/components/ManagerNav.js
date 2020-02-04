@@ -9,20 +9,20 @@ export default function ManagerNav({renderDateSelect, onChange, defaultValue}) {
         display: flex;
     `
 
-    const setDate = (event) => {
+    // const setDate = (event) => {
         
-        // update value of date picker
-        const date = document.getElementById('date-select').value
+    //     // update value of date picker
+    //     const date = document.getElementById('date-select').value
 
-        // convert from YYYY-MM-DD to DD/MM/YYYY
-        const formattedDate = date.split("-").reverse().join("/")
+    //     // convert from YYYY-MM-DD to DD/MM/YYYY
+    //     const formattedDate = date.split("-").reverse().join("/")
 
-        // update state
-        schedule = breakSchedules[formattedDate]?.breaks
+    //     // update state
+    //     schedule = breakSchedules[formattedDate]?.breaks
 
-        console.log(schedule)
+    //     console.log(schedule)
 
-    }
+    // }
 
     return (
         <>
@@ -31,7 +31,7 @@ export default function ManagerNav({renderDateSelect, onChange, defaultValue}) {
                 <Link to="/upload"><button>UPLOAD</button></Link>
                 <Link to="/stats"><button>STATS</button></Link>
                 <Link to="/view"><button>VIEW</button></Link>
-                {renderDateSelect ? <input defaultValue={defaultValue} type="date" id="date-select" onChange={setDate}/> : null}
+                {renderDateSelect ? <input defaultValue={defaultValue} type="date" id="date-select" onChange={()=>{}}/> : null}
                 <Logout style={{marginLeft: "auto"}}/>
             </Flex>
             <h1>Break Scheduler</h1>

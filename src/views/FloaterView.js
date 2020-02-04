@@ -116,7 +116,7 @@ export default function FloaterView() {
                 <input type="date" id="floater-date" onChange={onDateSelect} defaultValue={today} style={{fontSize: "18px", fontFamily: "roboto", width: "150px", marginLeft: "1rem"}}/>
             </div>
             <div style={{display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "0.5rem"}}>
-                <select onChange={onFloaterSelect} value={floatData.selectedFloater} defaultValue={1}>
+                <select onChange={onFloaterSelect} value={floatData.selectedFloater} defaultValue={1} style={{fontSize: "16px"}}>
                     {
                         floatData && getFloaterOptions()
                     }
