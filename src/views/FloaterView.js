@@ -4,45 +4,8 @@ import Logout from "../components/Logout"
 import breakSchedules from "../modules/seeds"
 import FloaterStatsGrid, { FloatHeader, FloatStatHeader, BreaksList, StatCell, ProjectedTimeCell, WarningCell } from "../styles/FloaterViewStyles"
 import moment from "moment"
-
-const floatReducer = (state, action) => {
-    switch (action.type) {
-        case "setSchedule": {
-            console.log("setSchedule")
-            const newSchedule = action.data
-            const goalTimeMs = new Date().setHours(0,0,0,0) + newSchedule.goalTime * 60000
-            const projectedTimeMs = Date.now() + newSchedule.totalBreakTime * 60000
-            return {
-                ...newSchedule,
-                goalTimeMs,
-                projectedTimeMs,
-                projectedIsPastGoal: projectedTimeMs > goalTimeMs,
-            }
-        }
-        case "updateBreaks": {
-            const { totalFifteens, totalThirties, totalBreakTime } = action.data
-            const projectedTimeMs = Date.now() + totalBreakTime * 60000
-            console.log(state.projectedTimeMs, projectedTimeMs)
-            return {
-                ...state,
-                totalFifteens, 
-                totalThirties,
-                totalBreakTime,
-                projectedTimeMs,
-                projectedIsPastGoal: projectedTimeMs > state.goalTimeMs,
-            }
-        }
-        case "updateFloater": {
-            return {
-                ...state,
-                selectedFloater: action.data,
-            }
-        }
-        default: {
-            return state
-        }
-    }
-}
+import floatReducer from "../modules/floatReducer"
+import today from "../modules/dateHelper"
 
 const initialState = {
     totalFifteens: 0,
@@ -73,7 +36,7 @@ export default function FloaterView() {
         const newSchedule = breakSchedules[formattedDate]
         dispatchFloatData({
             type: "setSchedule",
-            data: newSchedule,
+            data: newSchedule || initialState,
         })
 
     }
@@ -93,15 +56,14 @@ export default function FloaterView() {
         setFloater(event.target.value)
     }
 
-    // on mount, set date to today and render
     useEffect(()=>{
-
-        // get just the date out of new Date().toJSON
-        const today = new Date().toJSON().slice(0, 10)
-        setDate(today)
-        setFloater(1)
-
-    }, [])
+        // update projected every minute
+        setTimeout(()=>{
+            dispatchFloatData({
+                type: "updateProjected",
+            })
+        }, 60000)
+    }, [floatData.projectedTimeMs])
 
     const onBreakFinishChecked = (breakDuration, isChecked) => {
         
@@ -141,7 +103,7 @@ export default function FloaterView() {
         let options = []
         for (let i=1; i<=floatData.numFloaters; i++) {
             options.push(
-                <option value={i}>Floater {i}</option>
+                <option key={i} value={i}>Floater {i}</option>
             )
         }
         return options
@@ -149,17 +111,22 @@ export default function FloaterView() {
 
     return (
         <div style={{paddingBottom: 200}}>
-            <Logout />
-            <FloatHeader>Break Schedule</FloatHeader>
-            <input type="date" id="floater-date" onChange={onDateSelect}/>
-            <select onChange={onFloaterSelect}>
-                {
-                    floatData && getFloaterOptions()
-                }
-            </select>
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <FloatHeader>Break Schedule</FloatHeader>  
+                <input type="date" id="floater-date" onChange={onDateSelect} defaultValue={today} style={{fontSize: "18px", fontFamily: "roboto", width: "150px", marginLeft: "1rem"}}/>
+            </div>
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "0.5rem"}}>
+                <select onChange={onFloaterSelect} value={floatData.selectedFloater} defaultValue={1} style={{fontSize: "16px"}}>
+                    {
+                        floatData && getFloaterOptions()
+                    }
+                </select>
+                <Logout style={{marginLeft: "auto"}}/>
+            </div>
             {
                 floatData && floatData.breaks.map((breakData, index) => (
-                    floatData.selectedFloater == breakData.floater && <Break key={index} {...breakData} onCheckChange={onBreakFinishChecked} />
+                    floatData.selectedFloater === breakData.floater 
+                        && <Break key={index} {...breakData} onCheckChange={onBreakFinishChecked} />
                 ))
             }
             <FloaterStatsGrid>
