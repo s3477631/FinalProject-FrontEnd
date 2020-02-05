@@ -26,7 +26,7 @@ export default function ManagerViewView() {
     
     useEffect(()=>{
         date = document.getElementById('date-select')
-        schedule = breakSchedules[date.value]?.breaks
+        schedule = breakSchedules[date.value]?.breaks           
     }, [])
 
     return (

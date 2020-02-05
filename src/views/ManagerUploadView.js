@@ -31,7 +31,7 @@ export default function ManagerUploadView() {
         const newFile = event.target.files[0]
         const token = localStorage.getItem("token")
         const config = {
-            headers: { Authorization: `Bearer ${token}` }
+            headers: { Authorization: `${token}` }
         };
                 
         data.append('csvFile', newFile)
@@ -87,7 +87,7 @@ export default function ManagerUploadView() {
                     <form onSubmit={onSubmit} style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
                         <label>Drop Roster</label>
                         <Dropzone>
-                             <input type="file" hidden onChange={onFileAdded} required style={{width: "100%"}}/>
+                             <input type="file" onChange={onFileAdded} required style={{width: "100%"}}/>
                         </Dropzone>
                         
                         <br />
