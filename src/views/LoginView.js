@@ -26,20 +26,20 @@ export default function LoginView() {
         console.log(username)
         // retrieve token
         const user = {name: username}
-        //const token = "lakjdf"
-        const token = await axios.post("https://boiling-inlet-28252.herokuapp.com/auth/login", {email: username+"@mail.com", password})
-        console.log(token)
+        // const token = "lakjdf"
+        const response = await axios.post("https://boiling-inlet-28252.herokuapp.com/auth/login", {email: username+"@mail.com", password})
+        const token = response.data
+        console.log(response)
         // .then(response => {
         //     console.log(response)
         //     return response
         // })
-
         dispatch({
             type: "setSession",
             data: {user, token}
         })
         localStorage.setItem("user", JSON.stringify(user))
-        localStorage.setItem("token", token)
+        localStorage.setItem("token", "Bearer " + token)
         
         
         // dispatch({

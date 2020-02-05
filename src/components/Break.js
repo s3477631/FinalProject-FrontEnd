@@ -3,7 +3,7 @@ import ordinal from "ordinal"
 import prettyMs from "pretty-ms"
 import BreakGrid, { BreakHeader, ScheduledTime, CenteredCell, ElapsedTime } from "../styles/BreakStyles"
 import FakeCheckbox from "./FakeCheckbox"
-
+import axios from "axios"
 // the initial state needs to pull from the parent
 export default function Break({employee, breakNum, duration, startTime, endTime, onCheckChange,
     initialElapsed, initialStarted, initialFinished}) {
@@ -16,6 +16,15 @@ export default function Break({employee, breakNum, duration, startTime, endTime,
     const scheduledTime = `${startTime}-${endTime}`
     const elapsedTimeString = prettyMs(elapsedTime, {colonNotation: true, secondsDecimalDigits: 0})
 
+// just going to put a button here for now:- put the code in the function below inside of the onStartChecked
+
+const tempButton = event => { 
+    axios.post("http://localhost:3002/checked/start")
+    .then(response => console.log(response))
+    .catch(err => console.error(err))
+}
+
+
     const onStartChecked = event => {
 
         // post, store start time
@@ -24,6 +33,9 @@ export default function Break({employee, breakNum, duration, startTime, endTime,
 
         const checked = event.target.checked
         checked ? setStarted(Date.now()) : setStarted(checked)
+
+  
+        
 
     }
 
