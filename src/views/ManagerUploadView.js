@@ -2,14 +2,23 @@ import React, { useState } from "react"
 import ManagerNav from "../components/ManagerNav"
 import axios from "axios"
 import { Redirect } from "react-router-dom"
-
+import styled from "styled-components"
 export default function ManagerUploadView() {
+
+    const Dropzone = styled.div`
+    width: 50vw;
+    height: 80vh;
+    border: 4px dashed #fff;
+    `
+    const Background = styled.div`
+        background-color: red;
+    `
 
     const [ autofill, setAutofill ] = useState(null)
     const [ loading, setLoading ] = useState(null)
     const [ error, setError ] = useState(null)
     const [ success, setSuccess ] = useState(null)
-
+    const [file, setFile ] = useState(null)
     const onFileAdded = (event) => {
 
         // reset state
@@ -20,27 +29,21 @@ export default function ManagerUploadView() {
         // get autofill data from server
         const data = new FormData()
         const newFile = event.target.files[0]
-
-        // validate it's a csv before posting
-        const isCsv = newFile && newFile.name.includes(".csv")
-        if (isCsv) {
-            data.append('csvFile', newFile)
-            axios.post("https://boiling-inlet-28252.herokuapp.com/upload/csv", data)
-            .then(response => {
-                // if successful, will come back with autofill data
-                // uncomment below when axios request works
-                // setAutofill(response)
-                setAutofill({date: "2020-01-30", numFloaters: 2})
-                setLoading(false)
-            }).catch(error => {
-                setLoading(false)
-                setError("" + error)
-            })
-        } else {
+        const token = localStorage.getItem("token")
+        const config = {
+            headers: { Authorization: `${token}` }
+        };
+                
+        data.append('csvFile', newFile)
+        axios.post("https://boiling-inlet-28252.herokuapp.com/upload/csv", data, config)
+        .then(response => {
+            // update 
+            console.log(response)
+            setFile(response)
             setLoading(false)
             setError("Invalid format. Please upload a .csv file.")
             setAutofill(null)
-        }
+        })
         
     }
 
@@ -79,10 +82,14 @@ export default function ManagerUploadView() {
             <ManagerNav />
             { loading }
             { error && <p style={{color: "red"}}>An error occured during upload:<br/>{error}</p> }
+            <Background>
                 <div style={{display: "flex", justifyContent: "center"}}>
                     <form onSubmit={onSubmit} style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
-                        <label>Select roster </label>
-                        <input type="file" onChange={onFileAdded} required style={{width: "100%"}}/>
+                        <label>Drop Roster</label>
+                        <Dropzone>
+                             <input type="file" onChange={onFileAdded} required style={{width: "100%"}}/>
+                        </Dropzone>
+                        
                         <br />
                         {
                             autofill && <>
@@ -99,8 +106,9 @@ export default function ManagerUploadView() {
                             </>
                         }
                     </form>
-                </div>
+                    </div>
             { success && <Redirect to="/view" /> }
+            </Background>
         </>
     )
 }

@@ -26,12 +26,13 @@ export default function ManagerNav({renderDateSelect, onChange, defaultValue}) {
 
     return (
         <>
+
             <Flex>
                 {console.log('im being rerendered')}
-                <Link to="/upload"><button>UPLOAD</button></Link>
-                <Link to="/stats"><button>STATS</button></Link>
-                <Link to="/view"><button>VIEW</button></Link>
-                {renderDateSelect ? <input defaultValue={defaultValue} type="date" id="date-select" onChange={()=>{}}/> : null}
+                <Link data-cy="navuploadbutton" to="/upload"><button>UPLOAD</button></Link>
+                <Link data-cy="navstatsbutton" to="/stats"><button>STATS</button></Link>
+                <Link data-cy="navviewbutton" to="/view"><button>VIEW</button></Link>
+                {renderDateSelect ? <input data-cy="floatdatepicker" defaultValue={defaultValue} type="date" id="date-select" onChange={()=>{}}/> : null}
                 <Logout style={{marginLeft: "auto"}}/>
             </Flex>
             <h1>Break Scheduler</h1>
