@@ -15,8 +15,13 @@ export default function ManagerUploadView() {
         // get autofill data from server
         const data = new FormData()
         const newFile = event.target.files[0]
+        const token = localStorage.getItem("token")
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+                
         data.append('csvFile', newFile)
-        axios.post("https://boiling-inlet-28252.herokuapp.com/upload/csv", data)
+        axios.post("https://boiling-inlet-28252.herokuapp.com/upload/csv", data, config)
         .then(response => {
             // update 
             console.log(response)

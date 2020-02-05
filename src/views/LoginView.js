@@ -35,7 +35,7 @@ export default function LoginView() {
             data: {user, token}
         })
         localStorage.setItem("user", JSON.stringify(user))
-        localStorage.setItem("token", token)
+        // localStorage.setItem("token", token)
     }
 
     return (
