@@ -27,19 +27,23 @@ export default function Break({employee, breakNum, duration, startTime, endTime,
 
     }
 
+    let myTimeout = null
+
     const onFinishChecked = event => {
 
         // post, store finish time and time elapsed
 
 
+        clearTimeout(myTimeout)
 
         const checked = event.target.checked
         setFinished(checked)
         onCheckChange(duration, checked)
+        
     }
 
     useEffect(()=>{
-        started && !finished && setTimeout(()=>{
+        myTimeout = started && !finished && setTimeout(()=>{
             setElapsedTime(Date.now()-started)
         }, 1000)
     })

@@ -5,6 +5,7 @@ import breakSchedules from "../modules/seeds"
 import FloaterStatsGrid, { FloatHeader, FloatStatHeader, BreaksList, StatCell, ProjectedTimeCell, WarningCell } from "../styles/FloaterViewStyles"
 import moment from "moment"
 import floatReducer from "../modules/floatReducer"
+import today from "../modules/dateHelper"
 
 const initialState = {
     totalFifteens: 0,
@@ -55,18 +56,8 @@ export default function FloaterView() {
         setFloater(event.target.value)
     }
 
-    // on mount, set date to today and render
     useEffect(()=>{
-
-        // get just the date out of new Date().toJSON
-        const today = new Date().toJSON().slice(0, 10)
-        setDate(today)
-        setFloater(1)
-
-    }, [])
-
-    useEffect(()=>{
-        // update projected every minute (seconds for testing)
+        // update projected every minute
         setTimeout(()=>{
             dispatchFloatData({
                 type: "updateProjected",
@@ -120,14 +111,18 @@ export default function FloaterView() {
 
     return (
         <div style={{paddingBottom: 200}}>
-            <Logout />
-            <FloatHeader>Break Schedule</FloatHeader>
-            <input type="date" id="floater-date" onChange={onDateSelect}/>
-            <select onChange={onFloaterSelect} value={floatData.selectedFloater}>
-                {
-                    floatData && getFloaterOptions()
-                }
-            </select>
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <FloatHeader>Break Schedule</FloatHeader>  
+                <input type="date" id="floater-date" onChange={onDateSelect} defaultValue={today} style={{fontSize: "18px", fontFamily: "roboto", width: "150px", marginLeft: "1rem"}}/>
+            </div>
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "0.5rem"}}>
+                <select onChange={onFloaterSelect} value={floatData.selectedFloater} defaultValue={1} style={{fontSize: "16px"}}>
+                    {
+                        floatData && getFloaterOptions()
+                    }
+                </select>
+                <Logout style={{marginLeft: "auto"}}/>
+            </div>
             {
                 floatData && floatData.breaks.map((breakData, index) => (
                     floatData.selectedFloater === breakData.floater 

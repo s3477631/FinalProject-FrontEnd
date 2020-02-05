@@ -1,12 +1,14 @@
 import React from "react"
 import ManagerNav from "../components/ManagerNav"
 import breakSchedules from "../modules/seeds"
+import { yesterday } from "../modules/dateHelper"
 
 export default function ManagerStatsView(props) {
+    
     return (
         <>
-            <ManagerNav renderDateSelect defaultValue={"2020-01-30"}/>
-            <table>
+            <ManagerNav renderDateSelect defaultValue={yesterday} />
+            <table align="center">
                 <thead>
                     <tr>
                         <th>Statistic</th>

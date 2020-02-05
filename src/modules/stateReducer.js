@@ -9,6 +9,13 @@ export default function(state, action) {
                 token
             }
         }
+        case 'setSchedule': {
+            const schedule = action.data
+            return {
+                ...state,
+                schedule
+            }
+        }
         default: {
             return state
         }
