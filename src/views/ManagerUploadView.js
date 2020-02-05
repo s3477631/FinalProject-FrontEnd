@@ -18,7 +18,8 @@ export default function ManagerUploadView() {
     const [ loading, setLoading ] = useState(null)
     const [ error, setError ] = useState(null)
     const [ success, setSuccess ] = useState(null)
-    const [file, setFile ] = useState(null)
+    const [csvFilesuccess, setFilesuccess ] = useState(null)
+    const [upload, setUploader] = useState(true)
     const onFileAdded = (event) => {
 
         // reset state
@@ -37,12 +38,12 @@ export default function ManagerUploadView() {
         data.append('csvFile', newFile)
         axios.post("https://boiling-inlet-28252.herokuapp.com/upload/csv", data, config)
         .then(response => {
-            // update 
-            console.log(response)
-            setFile(response)
+            // update
+            setFilesuccess(response.data)
             setLoading(false)
-            setError("Invalid format. Please upload a .csv file.")
-            setAutofill(null)
+            setAutofill({date: "2020-02-01", numFloaters: 2})
+            setUploader(false)
+        
         })
         
     }
@@ -85,11 +86,14 @@ export default function ManagerUploadView() {
             <Background>
                 <div style={{display: "flex", justifyContent: "center"}}>
                     <form onSubmit={onSubmit} style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+                       
+                         
                         <label>Drop Roster</label>
+                        {upload &&
                         <Dropzone>
                              <input type="file" onChange={onFileAdded} required style={{width: "100%"}}/>
                         </Dropzone>
-                        
+                            }
                         <br />
                         {
                             autofill && <>
@@ -107,7 +111,7 @@ export default function ManagerUploadView() {
                         }
                     </form>
                     </div>
-            { success && <Redirect to="/view" /> }
+            { success && <Redirect to="/view" csvresult={csvFilesuccess}/> }
             </Background>
         </>
     )

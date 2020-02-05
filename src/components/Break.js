@@ -65,6 +65,7 @@ const tempButton = event => {
             <BreakHeader><h3>{breakTitle}</h3></BreakHeader>
             <ScheduledTime><h3>{scheduledTime}</h3></ScheduledTime>
             <CenteredCell>
+                <button onClick={tempButton}>TEST</button>
                 {/* <input type="checkbox" onChange={e=>onStartChecked(e)}/> */}
                 <FakeCheckbox onChange={onStartChecked}/>
             </CenteredCell>
