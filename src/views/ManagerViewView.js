@@ -32,8 +32,8 @@ export default function ManagerViewView() {
         // })
 
         // temp code to fill table
-        console.log(breakSchedules[date])
         setSchedule(breakSchedules[date])
+        console.log(schedule)
     }
 
     return (
@@ -47,7 +47,8 @@ export default function ManagerViewView() {
                     <th>Duration</th>
                     <th>Floater</th>
                 </thead>
-                <tbody>
+
+                 <tbody>
                     {
                         schedule && schedule.map((breakData) => (
                             <tr>
@@ -58,7 +59,7 @@ export default function ManagerViewView() {
                             </tr>
                         ))
                     }
-                </tbody>
+                </tbody> 
             </table>
         </>
     )

@@ -20,7 +20,7 @@ export default function LoginView() {
                  email: username + '@test.com',
                 password: password
             }
-          }).then(response => localStorage.setItem("token", response.data))
+          }).then(response => localStorage.setItem("token", "Bearer " + response.data))
         // update state
         // dispatch({
         //     type: "setToken",
