@@ -1,6 +1,6 @@
 import React from "react"
 import { useGlobalState } from "../modules/store"
-// import axios from "axios"
+import axios from "axios"
 import styled from "styled-components"
 
 const CenterScreen = styled.div`
@@ -26,27 +26,28 @@ export default function LoginView() {
         console.log(username)
         // retrieve token
         const user = {name: username}
-        const token = "lakjdf"
-        // const token = await axios.post("https://boiling-inlet-28252.herokuapp.com/auth/login", {email: username+"@mail.com", password})
-        // console.log(token)
-        // // .then(response => {
-        // //     console.log(response)
-        // //     return response
-        // // })
-        // dispatch({
-        //     type: "setSession",
-        //     data: {user, token}
+        //const token = "lakjdf"
+        const token = await axios.post("https://boiling-inlet-28252.herokuapp.com/auth/login", {email: username+"@mail.com", password})
+        console.log(token)
+        // .then(response => {
+        //     console.log(response)
+        //     return response
         // })
-        // localStorage.setItem("user", JSON.stringify(user))
-        // localStorage.setItem("token", token)
-        
-        
+
         dispatch({
             type: "setSession",
             data: {user, token}
         })
         localStorage.setItem("user", JSON.stringify(user))
         localStorage.setItem("token", token)
+        
+        
+        // dispatch({
+        //     type: "setSession",
+        //     data: {user, token}
+        // })
+        // localStorage.setItem("user", JSON.stringify(user))
+        // localStorage.setItem("token", token)
         
     }
 
