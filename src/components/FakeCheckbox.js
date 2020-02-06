@@ -22,8 +22,8 @@ const HiddenInput = styled.input`
 
 const CheckboxGraphic = styled.span`
     position: absolute;
-    top: -2rem;
-    left: -2rem;
+    top: -1rem;
+    left: -1rem;
     height: 4rem;
     width: 4rem;
     background-color: ${props => props.checked ? "green" : "#eee"};
@@ -43,6 +43,8 @@ const CheckboxGraphic = styled.span`
     }
     border-radius: 0.5rem;
 `
+
+
 
 const FakeCheckbox = ({onChange}) => {
     const [ checked, setChecked ] = useState(null)

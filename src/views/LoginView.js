@@ -8,7 +8,8 @@ import styled from "styled-components"
 const CenterScreen = styled.div`
     text-align: center;
     height: 70vh;
-    width: 100%;
+    width: 100vw;
+    margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -31,10 +32,6 @@ export default function LoginView() {
         axios({
             method: 'post',
             url: 'https://boiling-inlet-28252.herokuapp.com/auth/login',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',   
-                'Access-Control-Allow-Origin': '*'           
-            },
             data: {
                  email: username + '@test.com',
                 password: password
@@ -64,7 +61,7 @@ export default function LoginView() {
 
     return (
         <CenterScreen>
-            <h1>Break Scheduler</h1>
+  
             <form onSubmit={(event) => onSubmit(event)}>
                 <div>
                     <label>Username: </label>

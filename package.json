@@ -17,6 +17,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "rxjs": "^6.5.4",
+    "styled-bootstrap-components": "^4.0.0",
     "styled-components": "^5.0.0"
   },
   "scripts": {
