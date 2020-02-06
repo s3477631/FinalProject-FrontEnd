@@ -46,23 +46,19 @@ export default function ManagerUploadView() {
         .then(response => {
             setNumBreaks(response.data.breaks.length)
             setFilesuccess(response.data)
-            setLoading(false)   
-            setFirstBreak(response.data.breaks[response.data.breaks.length - 1].endTime  - response.data.breaks[0].startTime)
-            // setAutofill({date: "2020-02-01", numFloaters: 2})
+            setLoading(false)  
+            let breakhours = response.data.breaks[response.data.breaks.length - 1].endTime  - response.data.breaks[0].startTime 
+            setFirstBreak(breakhours)
             setUploader(false)
             setSuccess(true)
         })
-
-  
-    
-        
     }
 
     const  onStartChange = event => { 
         event.preventDefault()
         console.log(event)
 
- 
+        
         axios.post('https://boiling-inlet-28252.herokuapp.com/checked/start')
         .then(response => localStorage.setItem("startTime", JSON.stringify(response.data)))
     }
@@ -73,10 +69,13 @@ export default function ManagerUploadView() {
                 'Content-Type': 'application/json', 
                 "Content-Length": 141
             }
-        }
+        }   
+   
         const findbystarttime = localStorage.getItem("startTime")
         axios.post('https://boiling-inlet-28252.herokuapp.com/checked/end',findbystarttime, config)
         .then(response => console.log(response))
+        let breaker = firstBreak
+        setFirstBreak(breaker - 15)  
     }
 
     const onSubmit = event => {
@@ -113,6 +112,8 @@ export default function ManagerUploadView() {
         <>
             <ManagerNav />
             { loading }
+            <h4>Number of Breaks to go: {numBreaks}</h4>
+            <h4>Projected End time: {firstBreak}</h4>
             { error && <p style={{color: "red"}}>An error occured during upload:<br/>{error}</p> }
             <Background>
                 <div style={{display: "flex", justifyContent: "center"}}>
@@ -123,10 +124,7 @@ export default function ManagerUploadView() {
                         </Dropzone>
                             }
                         <br />
-        
-                        <h4>Number of Breaks to go: {numBreaks}</h4>
-                        <h4>Projected End time: {firstBreak}</h4>
-                        
+             
                       {success &&
                     
               <Tablewidth style={{width: "80vw"}}>             
