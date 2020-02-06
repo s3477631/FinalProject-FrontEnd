@@ -76,6 +76,7 @@ export default function ManagerUploadView() {
         .then(response => console.log(response))
         let breaker = firstBreak
         setFirstBreak(breaker - 15)  
+        setNumBreaks(numBreaks - 1 )
     }
 
     const onSubmit = event => {
@@ -112,6 +113,7 @@ export default function ManagerUploadView() {
         <>
             <ManagerNav />
             { loading }
+            
             <h4>Number of Breaks to go: {numBreaks}</h4>
             <h4>Projected End time: {firstBreak}</h4>
             { error && <p style={{color: "red"}}>An error occured during upload:<br/>{error}</p> }
