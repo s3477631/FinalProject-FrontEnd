@@ -7,6 +7,7 @@ export default function ManagerNav({renderDateSelect, onChange, defaultValue}) {
 
     const Flex = styled.div`
         display: flex;
+        margin: 0;
     `
 
     // const setDate = (event) => {

@@ -1,68 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Target Audience
+The main target audience is IKEA Logan, Cashline Department. Additionally, the application will work for any retail or food business involving shift work. 
 
-## Available Scripts
+# Business Challenge
+The Cashline Department is where people pay. It's where the cashiers and self-serve registers are. On any given day, there are a number of cashiers working, and each of them are entitled to a certain number of breaks based on the length of their shift. It is a business requirement that all of these breaks be fullfilled by a certain time, the Goal. 
 
-In the project directory, you can run:
+The issue is that there are occasions where the cashier in charge of breaks (the Floater) falls behind git@github.com:s3477631/FinalAssignment-Documentation.gitl time. This is due to a lack of infrastructure surrounding how these breaks are planned, and also the unpredictability of queue times. 
 
-### `yarn start`
+# Purpose
+The purpose of this application is to solve or relieve the aforementioned painpoints: 
+ - breaks not being completed on time
+ - reduce occasions where managers have to step in to support breaks 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Features
+The app will solve the Business Challenge through the proposed process and features: 
+1. Manager uploads break roster to the App
+2. The App will generate a "break schedule" based on the number of floaters and the time that breaks should be completed
+3. On the day, the floater(s) will access this break schedule via their phone, checking breaks off as they go
+4. The App will notify the floater to seek assistance if it determines that the floater will not finish in time
+5. Stats such as actual break durations, final finishing time, how many times a manager was called, can be retrieved for the manager's info afterwards. Managers can use this information to roster extra support and provide feedback to Floaters. 
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+# User Stories
+- As Floater, I want to be able to check off breaks as I go, so I can keep track of what breaks are done
+- As Floater, I want to see how many breaks I have left to do, so I can get an idea of when I will finish
+- As Floater, I want to see what breaks I have to do next, so I can prepare ahead of time
+- As Floater, I want breaks to be scheduled for me, so I don't have to think of who's break to do next
+- As Floater, I want to see if I'm behind in my breaks, so I can ask for assistance before it gets too late
+- As Manager, I want to generate a break schedule, so Floaters have a better chance of finishing on time
+- As Manager, I want to enable Floaters to be more effective, so I don't have to step in during the day
+- As Manager, I want to see how the floaters are performing, so I can roster extra support if necessary
+- As Manager, I want to see if employees are coming back from their breaks on time, so I can take disciplinary action if necessary
 
-### `yarn test`
+# Trello Board 
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![Trello Board](https://github.com/s3477631/FinalAssignment-Documentation/blob/master/docs/Trello.png)
 
-### `yarn build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Application Architecture Diagram
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+![Application Architecture Diagram](https://github.com/s3477631/FinalAssignment-Documentation/blob/master/docs/AAD.jpg)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Dataflow diagram
 
-### `yarn eject`
+![Data Flow Diagram](https://github.com/s3477631/FinalAssignment-Documentation/blob/master/docs/break-scheduler-dfd.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import ordinal from "ordinal"
 import prettyMs from "pretty-ms"
 import BreakGrid, { BreakHeader, ScheduledTime, CenteredCell, ElapsedTime } from "../styles/BreakStyles"
@@ -39,14 +39,14 @@ const tempButton = event => {
 
     }
 
-    let myTimeout = null
+ 
 
     const onFinishChecked = event => {
 
         // post, store finish time and time elapsed
 
 
-        clearTimeout(myTimeout)
+     
 
         const checked = event.target.checked
         setFinished(checked)
@@ -54,11 +54,7 @@ const tempButton = event => {
         
     }
 
-    useEffect(()=>{
-        myTimeout = started && !finished && setTimeout(()=>{
-            setElapsedTime(Date.now()-started)
-        }, 1000)
-    })
+
 
     return (
         <BreakGrid started={started} finished={finished}>
