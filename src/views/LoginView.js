@@ -32,7 +32,8 @@ export default function LoginView() {
             method: 'post',
             url: 'https://boiling-inlet-28252.herokuapp.com/auth/login',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'                
+                'Content-Type': 'application/x-www-form-urlencoded',   
+                'Access-Control-Allow-Headers': '*'             
             },
             data: {
                  email: username + '@test.com',
