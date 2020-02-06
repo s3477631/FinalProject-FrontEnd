@@ -33,7 +33,7 @@ export default function LoginView() {
             url: 'https://boiling-inlet-28252.herokuapp.com/auth/login',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',   
-                'Access-Control-Allow-Headers': '*'             
+                'Access-Control-Allow-Origin': '*'           
             },
             data: {
                  email: username + '@test.com',
@@ -43,7 +43,7 @@ export default function LoginView() {
         // update state
         // dispatch({
         //     type: "setToken",
-        //     data: token
+        //     data: token  
         // })
         // dispatch({
         //     type: "setSession",
