@@ -12,13 +12,10 @@ import { useEffect } from "react"
 export default function ManagerViewView() {
 
     let schedule = null
-    
+
     return (
         <>
-            <ManagerNav renderDateSelect onChange={()=>{}} defaultValue={today}/>
-            {
-                !schedule && <p style={{color: "red"}}>A break schedule has not been generated for this day.</p>
-            }
+            <ManagerNav renderDateSelect defaultValue={today}/>
             <ManagerViewTable />
         </>
     )
