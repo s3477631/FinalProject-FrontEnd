@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { useGlobalState } from "./store"
+import { useGlobalState } from "../modules/store"
 
 // only allow user through with a token
 export default function PrivateRoute(props) {

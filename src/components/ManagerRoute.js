@@ -1,7 +1,7 @@
 import React from "react"
 import PrivateRoute from "./PrivateRoute"
 import { Redirect } from "react-router-dom"
-import { useGlobalState } from "./store"
+import { useGlobalState } from "../modules/store"
 
 // requires a token and user to be manager
 export default function ManagerRoute(props) {

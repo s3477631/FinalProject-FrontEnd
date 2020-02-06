@@ -1,12 +1,12 @@
-import React, { useReducer, useEffect } from "react"
+import React, { useReducer } from "react"
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import FloaterView from "./FloaterView"
-import LoginView from "./LoginView"
-import ManagerUploadView from "./ManagerUploadView"
-import ManagerStatsView from "./ManagerStatsView"
-import ManagerViewView from "./ManagerViewView"
-import stateReducer from "./stateReducer"
-import { StateContext } from "./store"
+import FloaterView from "../views/FloaterView"
+import LoginView from "../views/LoginView"
+import ManagerUploadView from "../views/ManagerUploadView"
+import ManagerStatsView from "../views/ManagerStatsView"
+import ManagerViewView from "../views/ManagerViewView"
+import stateReducer from "../modules/stateReducer"
+import { StateContext } from "../modules/store"
 import PrivateRoute from "./PrivateRoute"
 import ManagerRoute from "./ManagerRoute"
 
@@ -17,28 +17,8 @@ export default function App() {
         token: localStorage.getItem("token") || null,
     }
 
-    const [store, dispatch] = useReducer(stateReducer, initialState)
+    const [ store, dispatch ] = useReducer(stateReducer, initialState)
     const { user } = store
-    
-    // Use effect hook to initialise component on mount
-	useEffect(()=> {
-
-        // get an existing user from localStorage
-        dispatch({
-            type: "setUser",
-            data: JSON.parse(localStorage.getItem("user"))
-		})
-        
-        // same with token
-        dispatch({
-            type: "setToken",
-            data: localStorage.getItem("token")
-        })
-
-        // return a function that specifies any actions on component unmount
-        return () => {}
-        
-    }, [])
     
     return (
         <StateContext.Provider value={{store, dispatch}}>

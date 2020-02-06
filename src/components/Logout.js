@@ -1,23 +1,18 @@
 import React from "react"
-import { useGlobalState } from "./store"
+import { useGlobalState } from "../modules/store"
 import { Link } from "react-router-dom"
 
-export default function Logout() {
-    //event.preventDefault()
+export default function Logout({style}) {
     const { dispatch } = useGlobalState()
     const onClick = () => {
         dispatch({
-            type: "setUser", 
-            data: null
-        })
-        dispatch({
-            type: "setToken", 
-            data: null
+            type: "setSession",
+            data: {user: null, token: null}
         })
         localStorage.removeItem("user")
         localStorage.removeItem("token")
     }
     return (
-        <Link onClick={event => onClick(event)}>Logout</Link>
+        <Link to="" data-cy="logoutbutton" onClick={event => onClick(event)} style={style} >Logout</Link>
     )
 }
