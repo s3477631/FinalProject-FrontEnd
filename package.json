@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.1",
     "cypress": "^3.8.3",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "nodemon": "^1.18.7",
     "ordinal": "^1.0.3",
     "pretty-ms": "^5.1.0",
